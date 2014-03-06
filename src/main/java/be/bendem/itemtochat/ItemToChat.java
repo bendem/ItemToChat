@@ -17,6 +17,8 @@ public class ItemToChat extends JavaPlugin {
     public void onEnable() {
         logger = getLogger();
         saveDefaultConfig();
+        // TODO Add a way to send item trough chat using a placeholder
+        // Like "Wanna see my [item]" where item is replaced by item in hand
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
     }
 

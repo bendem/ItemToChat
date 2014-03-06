@@ -8,8 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.logging.Logger;
-
 public class ItemStackToTellRaw {
 
     private final ItemStack  itemStack;
