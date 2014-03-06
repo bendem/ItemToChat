@@ -1,0 +1,5 @@
+name: ${pom.name}
+main: ${pom.groupId}.${pom.name}
+version: ${pom.version}
+author: bendem
+description: Test plugin.

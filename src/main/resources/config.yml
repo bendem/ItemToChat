@@ -1,0 +1,130 @@
+format:
+    before: "["
+    after: "]"
+
+autodetect-colors:
+    - leather_helmet
+    - leather_chestplate
+    - leather_leggings
+    - leather_boots
+    - wool
+    - stained_glass
+    - stained_clay
+    - stained_glass_pane
+    - carpet
+
+# http://minecraft.gamepedia.com/Formatting_codes
+item-colors:
+    gold_ore: gold
+    iron_ore: gray
+    coal_ore: dark_gray
+    #coal_ore: black
+    lapis_ore: dark_blue
+    lapis_block: dark_blue
+    gold_block: gold
+    iron_block: gray
+    tnt: red
+    obsidian: dark_purple
+    mob_spawner: dark_purple
+    diamond_ore: dark_aqua
+    diamond_block: dark_aqua
+    redstone_ore: dark_red
+    glowing_redstone_ore: dark_red
+    glowstone: yellow
+    enchantment_table: dark_purple
+    brewing_stand: gold
+    dragon_egg: dark_purple
+    emerald_ore: green
+    ender_chest: dark_purple
+    emerald_block: green
+    beacon: aqua
+    gold_plate: gold
+    iron_plate: gray
+    redstone_block: dark_red
+    coal_block: dark_gray
+    # coal_block: black
+    iron_spade: gray
+    iron_pickaxe: gray
+    iron_axe: gray
+    flint_and_steel: gray
+    coal: dark_gray
+    # coal: black
+    diamond: dark_aqua
+    iron_ingot: gray
+    gold_ingot: gold
+    iron_sword: gray
+    wood_sword: maroon # Pas de brun?
+    wood_spade: maroon # Pas de brun?
+    wood_pickaxe: maroon # Pas de brun?
+    wood_axe: maroon # Pas de brun?
+    stone_sword: dark_gray
+    stone_spade: dark_gray
+    stone_pickaxe: dark_gray
+    stone_axe: dark_gray
+    diamond_sword: dark_aqua
+    diamond_spade: dark_aqua
+    diamond_pickaxe: dark_aqua
+    diamond_axe: dark_aqua
+    gold_sword:  gold
+    gold_spade: gold
+    gold_pickaxe: gold
+    gold_axe: gold
+    wood_hoe: maroon # Pas de brun?
+    stone_hoe: dark_gray
+    iron_hoe: gray
+    diamond_hoe: dark_aqua
+    gold_hoe: gold
+    chainmail_helmet: gray
+    chainmail_chestplate: gray
+    chainmail_leggings: gray
+    chainmail_boots: gray
+    iron_helmet: gray
+    iron_chestplate: gray
+    iron_leggings: gray
+    iron_boots: gray
+    diamond_helmet: dark_aqua
+    diamond_chestplate: dark_aqua
+    diamond_leggings: dark_aqua
+    diamond_boots: dark_aqua
+    gold_helmet: gold
+    gold_chestplate: gold
+    gold_leggings: gold
+    gold_boots: gold
+    golden_apple: gold
+    redstone: dark_red
+    compass: light_purple
+    watch: light_purple
+    glowstone_dust: yellow
+    map: light_purple
+    ender_pearl: dark_purple
+    blaze_rod: yellow
+    ghast_tear: dark_purple
+    gold_nugget: gold
+    potion: light_purple
+    blaze_powder: gold
+    magma_cream: gold
+    brewing_stand_item: gold
+    eye_of_ender: dark_purple
+    exp_bottle: light_purple
+    fireball: red
+    emerald: green
+    empty_map: light_purple
+    golden_carrot: gold
+    nether_star: aqua
+    enchanted_book: aqua
+    iron_barding: gray
+    gold_barding: gold
+    diamond_barding: dark_aqua
+    name_tag: aqua
+    gold_record: gold
+    green_record: green
+    record_3:
+    record_4:
+    record_5:
+    record_6:
+    record_7:
+    record_8:
+    record_9:
+    record_10:
+    record_11:
+    record_12:

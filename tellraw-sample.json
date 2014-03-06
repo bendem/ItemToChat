@@ -1,0 +1,67 @@
+{
+    "text": "[",
+    "extra": [{
+            "text": "Diamond Pickaxe",
+            "color": "aqua",
+            "hoverEvent": {
+                "action": "show_item",
+                "value": "{
+                    id: 278,
+                    tag: {
+                        ench:[
+                            {id:32,lvl:5}
+                        ]
+                    }
+                }"
+            }
+        }, {
+            "text": "]"
+        }
+    ]
+}
+
+/tellraw @p {
+    "text": "[",
+    "extra": [{
+            "text": "Diamond Pickaxe",
+            "color": "aqua",
+            "hoverEvent": {action:"show_item",value:"{id:73,tag:{ench:[]}}"}
+        }, {
+            "text": "]"
+        }
+    ]
+}
+
+
+/tellraw @p {
+    "text": "[",
+    "extra": [{
+            "text": "Diamond Pickaxe",
+            "color": "aqua",
+            "hoverEvent": {action:"show_item",value:"{id:278,tag:{ench:[{id:34,lvl:3},{id:32,lvl:5},{id:33,lvl:1}]}}"}
+        }, {
+            "text": "]"
+        }
+    ]
+}
+
+[
+    {text: "["},
+    {
+        text: "Diamond Sword",
+        color: "dark_aqua",
+        hoverEvent: {
+            action:"show_item",
+            value:"{
+                id: 276,
+                Damage: 0,
+                tag: {
+                    display: {
+                        Name:\"Yolo\"
+                    }
+                }
+            }"
+        }
+    },
+    {text: "]"}
+]
