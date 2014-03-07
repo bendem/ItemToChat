@@ -1,0 +1,25 @@
+From df467276099ff3d18f5faa46bccc9586ed120ccb Mon Sep 17 00:00:00 2001
+From: bendem <online@bendem.be>
+Date: Fri, 7 Mar 2014 00:59:19 +0100
+Subject: [PATCH] remove quotes from names
+
+---
+ gson/src/main/java/com/google/gson/stream/JsonWriter.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gson/src/main/java/com/google/gson/stream/JsonWriter.java b/gson/src/main/java/com/google/gson/stream/JsonWriter.java
+index 6a935dd..e00da06 100644
+--- a/gson/src/main/java/com/google/gson/stream/JsonWriter.java
++++ b/gson/src/main/java/com/google/gson/stream/JsonWriter.java
+@@ -399,7 +399,7 @@ public class JsonWriter implements Closeable, Flushable {
+   private void writeDeferredName() throws IOException {
+     if (deferredName != null) {
+       beforeName();
+-      string(deferredName);
++      out.write(deferredName);
+       deferredName = null;
+     }
+   }
+-- 
+1.8.5.2.msysgit.0
+
