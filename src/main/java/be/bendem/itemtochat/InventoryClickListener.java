@@ -31,19 +31,9 @@ public class InventoryClickListener implements Listener {
 
         plugin.logger.info(json);
 
-        // FIXME At the moment, we usurpate an op identity to send the tellraw command from. This is not the way to go!
-        Player firstOp = null;
-        for(OfflinePlayer op : Bukkit.getOperators()) {
-            if(op.isOnline()) {
-                firstOp = op.getPlayer();
-            }
-        }
-        if(firstOp == null) {
-            ((Player) e.getWhoClicked()).sendMessage(ChatColor.RED + "No operator, can't use the tellraw command...");
-            return;
-        }
+        // TODO Permission check for sender and receivers
         for(Player p : Bukkit.getOnlinePlayers()) {
-            Bukkit.dispatchCommand(firstOp, "tellraw " + p.getName() + " { text: \"\", extra: " + json + "}");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " { text: \"\", extra: " + json + "}");
         }
     }
 
