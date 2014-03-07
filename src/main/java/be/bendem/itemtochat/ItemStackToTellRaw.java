@@ -59,6 +59,7 @@ public class ItemStackToTellRaw {
         return jsHoverEvent;
     }
 
+    @SuppressWarnings("deprecation")
     private JsonObject createValueSection() {
         JsonObject jsValue = new JsonObject();
         JsonObject jsTag = createTagSection();
@@ -98,6 +99,7 @@ public class ItemStackToTellRaw {
         return jsDisplay;
     }
 
+    @SuppressWarnings("deprecation")
     private JsonArray createEnchantmentsSection() {
         if(itemStack.getEnchantments().size() == 0) {
             return null;
