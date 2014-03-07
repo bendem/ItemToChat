@@ -19,9 +19,6 @@ public class ItemStackToTellRaw {
     }
 
     public String toJson() {
-        //! Uses custom gson.stream.JsonWriter
-        //! line 402 was replaced by out.write(deferredName);
-        //! to remove quotes surrounding names.
         Gson gson = new Gson();
         return gson.toJson(createExtraSection());
     }
