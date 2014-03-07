@@ -2,4 +2,47 @@ name: ${pom.name}
 main: ${pom.groupId}.${pom.name}
 version: ${pom.version}
 author: bendem
-description: Test plugin.
+description: Send items to chat so others know what you speak about.
+
+commands:
+    itc:
+        usage: |
+            /<command> reload Reload config from file
+            /<command> show <player> Shows an item to a player trough the chat
+            /<command> send <player> Sends an item to a player trough the chat
+            /<command> give <player> Gives an item to a player trough the chat
+        description: ItemToChat commands
+        permission: itemtochat.commands
+
+permissions:
+    itemtochat.*:
+        description: Give access to all ItemToChat features
+        children:
+            itemtochat.commands: true
+            itemtochat.chat: true
+    itemtochat.commands.*:
+        description: Give access to all ItemToChat commands
+        children:
+            itemtochat.commands.reload: true
+            itemtochat.commands.show: true
+            itemtochat.commands.send: true
+            itemtochat.commands.give: true
+
+    itemtochat.commands.reload:
+        description: Reload config from file
+        default: op
+    itemtochat.commands.show:
+        description: Reload config from file
+        default: true
+    itemtochat.commands.send:
+        description: Reload config from file
+        default: true
+    itemtochat.commands.give:
+        description: Reload config from file
+        default: op
+
+    # TODO Complete these
+    itemtochat.chat.*:
+        description: Give access to all ItemToChat commands
+        children:
+
