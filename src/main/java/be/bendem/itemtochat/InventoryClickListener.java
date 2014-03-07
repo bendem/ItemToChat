@@ -1,5 +1,9 @@
 package be.bendem.itemtochat;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,9 +31,20 @@ public class InventoryClickListener implements Listener {
 
         plugin.logger.info(json);
 
-        // TODO Change this to send message to all players (@a is not recognized by bukkit), from the console
-        plugin.getServer().dispatchCommand(plugin.getServer().getPlayerExact("bendembd"),
-            "tellraw bendembd { text: \"\", extra: " + json + "}");
+        // FIXME At the moment, we usurpate an op identity to send the tellraw command from. This is not the way to go!
+        Player firstOp = null;
+        for(OfflinePlayer op : Bukkit.getOperators()) {
+            if(op.isOnline()) {
+                firstOp = op.getPlayer();
+            }
+        }
+        if(firstOp == null) {
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.RED + "No operator, can't use the tellraw command...");
+            return;
+        }
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            Bukkit.dispatchCommand(firstOp, "tellraw " + p.getName() + " { text: \"\", extra: " + json + "}");
+        }
     }
 
 }
