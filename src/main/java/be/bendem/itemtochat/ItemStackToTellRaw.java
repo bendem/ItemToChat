@@ -32,7 +32,11 @@ public class ItemStackToTellRaw {
         JsonObject jsExtraSection = new JsonObject();
 
         // TODO Make text being client translated
-        jsExtraSection.addProperty("text", capitalize(itemStack.getType().name().toLowerCase().replace("_", " ")));
+        String itemText =  capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
+        if(itemStack.getAmount() > 1) {
+            itemText += " x " + itemStack.getAmount();
+        }
+        jsExtraSection.addProperty("text", itemText);
         jsExtraSection.addProperty("color", getItemColor());
         jsExtraSection.add("hoverEvent", createHoverEventSection());
 
