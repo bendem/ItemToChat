@@ -45,4 +45,6 @@ permissions:
     itemtochat.chat.*:
         description: Give access to all ItemToChat commands
         children:
+            itemtochat.chat.message: true
+            itemtochat.chat.click: true
 

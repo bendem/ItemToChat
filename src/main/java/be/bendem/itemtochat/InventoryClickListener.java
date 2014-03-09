@@ -33,7 +33,7 @@ public class InventoryClickListener implements Listener {
 
         // TODO Permission check for sender and receivers
         for(Player p : Bukkit.getOnlinePlayers()) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " { text: \"\", extra: " + json + "}");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackToTellRaw.toTellRawCommand(p.getName(), json));
         }
     }
 

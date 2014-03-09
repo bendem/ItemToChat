@@ -1,3 +1,5 @@
+chat-string-to-replace: "[item]"
+
 format:
     before: "["
     after: "]"

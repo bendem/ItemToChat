@@ -12,19 +12,26 @@ public class ItemStackToTellRaw {
 
     private final ItemStack  itemStack;
     private final ItemToChat plugin;
+    private final String before;
+    private final String after;
 
-    ItemStackToTellRaw(ItemStack itemStack, ItemToChat plugin) {
+    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin) {
+        this(itemStack, plugin, null, null);
+    }
+
+    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin, final String before, final String after) {
         this.itemStack = itemStack;
         this.plugin = plugin;
+        this.before = before;
+        this.after = after;
     }
 
     public String toJson() {
         Gson gson = new Gson();
-        return gson.toJson(createExtraSection());
-    }
-
-    public String toTellRawCommand(String target) {
-        return "/tellraw " + target + toJson();
+        JsonObject json = new JsonObject();
+        json.addProperty("text", before == null ? "" : before);
+        json.add("extra", createExtraSection());
+        return gson.toJson(json);
     }
 
     private JsonArray createExtraSection() {
@@ -44,7 +51,7 @@ public class ItemStackToTellRaw {
         JsonObject after = new JsonObject();
 
         before.addProperty("text", "[");
-        after.addProperty("text", "]");
+        after.addProperty("text", "]" + (this.after == null ? "" : this.after));
 
         jsExtra.add(before);
         jsExtra.add(jsExtraSection);
@@ -143,6 +150,10 @@ public class ItemStackToTellRaw {
             }
         }
         return new String(buffer);
+    }
+
+    public static String toTellRawCommand(String target, String json) {
+        return "tellraw " + target + " " + json;
     }
 
 }
