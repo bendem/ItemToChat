@@ -30,9 +30,10 @@ You can just middle click an item and it will send it to the chat.
 
 ## Features
 
-- ``[ ]`` Display item in the chat by clicking it
-- ``[ ]`` Display item in the chat by typing ``[item]`` in the chat
+- ``[X]`` Display item in the chat by clicking it
+- ``[X]`` Display item in the chat by typing ``[item]`` in the chat
 - ``[ ]`` Display item in the chat with the possibility to click it to get it
+- ``[ ]`` Handle all item data
 
 ## Continous development
 
