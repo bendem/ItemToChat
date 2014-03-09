@@ -7,6 +7,7 @@ description: Send items to chat so others know what you speak about.
 commands:
     itc:
         usage: |
+            Usage:
             /<command> reload Reload config from file
             /<command> show <player> Shows an item to a player trough the chat
             /<command> send <player> Sends an item to a player trough the chat

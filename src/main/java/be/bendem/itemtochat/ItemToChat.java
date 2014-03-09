@@ -22,6 +22,8 @@ public class ItemToChat extends JavaPlugin {
         // Like "Wanna see my [item]" where item is replaced by item in hand
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+
+        getCommand("itc").setExecutor(new CommandHandler(this));
     }
 
 }
