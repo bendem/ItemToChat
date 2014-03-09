@@ -27,7 +27,7 @@ public class InventoryClickListener implements Listener {
         plugin.logger.info("===============================");
         plugin.logger.info("Click!");
 
-        String json = new ItemStackToTellRaw(e.getCurrentItem(), plugin).toJson();
+        String json = new ItemStackToTellRaw(e.getCurrentItem(), plugin, "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ").toJson();
 
         plugin.logger.info(json);
 

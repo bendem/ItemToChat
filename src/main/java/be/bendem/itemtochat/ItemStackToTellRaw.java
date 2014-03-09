@@ -19,6 +19,10 @@ public class ItemStackToTellRaw {
         this(itemStack, plugin, null, null);
     }
 
+    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin, String before) {
+        this(itemStack, plugin, before, null);
+    }
+
     ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin, final String before, final String after) {
         this.itemStack = itemStack;
         this.plugin = plugin;

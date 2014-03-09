@@ -31,7 +31,7 @@ public class ChatListener implements Listener {
             return;
         }
 
-        String before = message.substring(0, message.indexOf(chatStringToReplace));
+        String before = "<" + e.getPlayer().getDisplayName() + "> " + message.substring(0, message.indexOf(chatStringToReplace));
         String after = message.substring(message.indexOf(chatStringToReplace) + chatStringToReplace.length());
         String json = new ItemStackToTellRaw(e.getPlayer().getItemInHand(), plugin, before, after).toJson();
         for(Player p : e.getRecipients()) {
