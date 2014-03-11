@@ -1,5 +1,6 @@
 package be.bendem.itemtochat;
 
+import be.bendem.itemtochat.command.CommandHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
