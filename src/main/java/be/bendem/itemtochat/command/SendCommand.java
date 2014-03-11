@@ -18,4 +18,14 @@ public class SendCommand extends AbstractCommand {
     public void exec(CommandSender sender, List<String> args) {
     }
 
+    @Override
+    public boolean canBeUsedFromConsole() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPermission(CommandSender sender) {
+        return sender.hasPermission("itemtochat.commands.send");
+    }
+
 }

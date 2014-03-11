@@ -21,4 +21,14 @@ public class ReloadCommand extends AbstractCommand {
         sendLogMessage(sender, "Config reloaded.", ChatColor.GREEN);
     }
 
+    @Override
+    public boolean canBeUsedFromConsole() {
+        return true;
+    }
+
+    @Override
+    public boolean hasPermission(CommandSender sender) {
+        return sender.hasPermission("itemtochat.commands.reload");
+    }
+
 }

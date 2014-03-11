@@ -18,4 +18,14 @@ public class HelpCommand extends AbstractCommand {
     public void exec(CommandSender sender, List<String> args) {
     }
 
+    @Override
+    public boolean canBeUsedFromConsole() {
+        return true;
+    }
+
+    @Override
+    public boolean hasPermission(CommandSender sender) {
+        return true;
+    }
+
 }
