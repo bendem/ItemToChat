@@ -1,0 +1,3 @@
+﻿Move json converters to own package
+
+and separate them so it's easier to know what's going on...

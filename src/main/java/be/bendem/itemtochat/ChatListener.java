@@ -1,5 +1,6 @@
 package be.bendem.itemtochat;
 
+import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,10 +34,10 @@ public class ChatListener implements Listener {
 
         String before = "<" + e.getPlayer().getDisplayName() + "> " + message.substring(0, message.indexOf(chatStringToReplace));
         String after = message.substring(message.indexOf(chatStringToReplace) + chatStringToReplace.length());
-        String json = new ItemStackToTellRaw(e.getPlayer().getItemInHand(), plugin, before, after).toJson();
+        String json = new ItemStackConverter(e.getPlayer().getItemInHand(), plugin, before, after).toJson();
         for(Player p : e.getRecipients()) {
-            plugin.logger.info("command : " + ItemStackToTellRaw.toTellRawCommand(p.getName(), json));
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackToTellRaw.toTellRawCommand(p.getName(), json));
+            plugin.logger.info("command : " + ItemStackConverter.toTellRawCommand(p.getName(), json));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackConverter.toTellRawCommand(p.getName(), json));
         }
 
         e.setCancelled(true);

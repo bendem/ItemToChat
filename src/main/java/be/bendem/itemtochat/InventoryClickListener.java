@@ -1,8 +1,7 @@
 package be.bendem.itemtochat;
 
+import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -27,13 +26,13 @@ public class InventoryClickListener implements Listener {
         plugin.logger.info("===============================");
         plugin.logger.info("Click!");
 
-        String json = new ItemStackToTellRaw(e.getCurrentItem(), plugin, "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ").toJson();
+        String json = new ItemStackConverter(e.getCurrentItem(), plugin, "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ").toJson();
 
         plugin.logger.info(json);
 
         // TODO Permission check for sender and receivers
         for(Player p : Bukkit.getOnlinePlayers()) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackToTellRaw.toTellRawCommand(p.getName(), json));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackConverter.toTellRawCommand(p.getName(), json));
         }
     }
 

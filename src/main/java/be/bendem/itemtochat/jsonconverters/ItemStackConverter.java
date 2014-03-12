@@ -1,49 +1,59 @@
-package be.bendem.itemtochat;
+package be.bendem.itemtochat.jsonconverters;
 
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
-
+import be.bendem.itemtochat.ItemToChat;
+import be.bendem.itemtochat.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ItemStackToTellRaw {
+import java.util.List;
+
+public class ItemStackConverter {
 
     private final ItemStack  itemStack;
     private final ItemToChat plugin;
-    private final String before;
-    private final String after;
+    private final String     textBefore;
+    private final String     textAfter;
 
-    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin) {
+    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin) {
         this(itemStack, plugin, null, null);
     }
 
-    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin, String before) {
-        this(itemStack, plugin, before, null);
+    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin, String textBefore) {
+        this(itemStack, plugin, textBefore, null);
     }
 
-    ItemStackToTellRaw(final ItemStack itemStack, final ItemToChat plugin, final String before, final String after) {
+    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin, final String textBefore, final String textAfter) {
         this.itemStack = itemStack;
         this.plugin = plugin;
-        this.before = before;
-        this.after = after;
+        this.textBefore = textBefore;
+        this.textAfter = textAfter;
+    }
+
+    public static String toTellRawCommand(String target, String json) {
+        return "tellraw " + target + " " + json;
     }
 
     public String toJson() {
         Gson gson = new Gson();
         JsonObject json = new JsonObject();
-        json.addProperty("text", before == null ? "" : before);
+        json.addProperty("text", textBefore == null ? "" : textBefore);
         json.add("extra", createExtraSection());
         return gson.toJson(json);
     }
 
     private JsonArray createExtraSection() {
-        JsonArray  jsExtra = new JsonArray();
+        JsonArray jsExtra = new JsonArray();
         JsonObject jsExtraSection = new JsonObject();
 
         // TODO Make text being client translated
-        String itemText =  capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
+        String itemText = Utils.capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
         if(itemStack.getAmount() > 1) {
             itemText += " x " + itemStack.getAmount();
         }
@@ -55,7 +65,7 @@ public class ItemStackToTellRaw {
         JsonObject after = new JsonObject();
 
         before.addProperty("text", "[");
-        after.addProperty("text", "]" + (this.after == null ? "" : this.after));
+        after.addProperty("text", "]" + (this.textAfter == null ? "" : this.textAfter));
 
         jsExtra.add(before);
         jsExtra.add(jsExtraSection);
@@ -90,6 +100,10 @@ public class ItemStackToTellRaw {
         if(jsEnchants != null) {
             jsTag.add("ench", jsEnchants);
         }
+        JsonObject jsFirework = createFireworkSection();
+        if(jsEnchants != null) {
+            jsTag.add("Fireworks", jsFirework);
+        }
         JsonObject jsDisplay = createDisplaySection();
         if(jsDisplay != null) {
             jsTag.add("display", jsDisplay);
@@ -111,6 +125,24 @@ public class ItemStackToTellRaw {
         return jsDisplay;
     }
 
+    private JsonObject createFireworkSection() {
+        if(itemStack.getType() != Material.FIREWORK) {
+            return null;
+        }
+
+        JsonObject jsFirework = new JsonObject();
+
+        FireworkMeta fireworkMeta = (FireworkMeta) itemStack.getItemMeta();
+        List<FireworkEffect> fireworkEffects = fireworkMeta.getEffects();
+
+        jsFirework.addProperty("Flight", fireworkMeta.getPower());
+
+        for(FireworkEffect effect : fireworkEffects) {
+        }
+
+        return jsFirework;
+    }
+
     @SuppressWarnings("deprecation")
     private JsonArray createEnchantmentsSection() {
         if(itemStack.getEnchantments().size() == 0) {
@@ -118,7 +150,7 @@ public class ItemStackToTellRaw {
         }
         JsonArray enchants = new JsonArray();
 
-        for (Enchantment enchant : itemStack.getEnchantments().keySet()) {
+        for(Enchantment enchant : itemStack.getEnchantments().keySet()) {
             JsonObject jsEnchant = new JsonObject();
             // TODO Use the new minecraft names
             // getId is deprecated but we need it since minecraft don't handle bukkit values
@@ -135,29 +167,6 @@ public class ItemStackToTellRaw {
         // TODO handle wool / stained glass / leather armor (using autodetect-colors)
         plugin.logger.info(itemStack.getType().name().toLowerCase());
         return plugin.getConfig().getString("item-colors." + itemStack.getType().name().toLowerCase(), "white");
-    }
-
-    // TODO This has nothing to do here...
-    public static String capitalize(final String str) {
-        if (str.isEmpty()) {
-            return str;
-        }
-        final char[] buffer = str.toCharArray();
-        boolean capitalizeNext = true;
-        for (int i = 0; i < buffer.length; i++) {
-            final char ch = buffer[i];
-            if (ch == ' ') {
-                capitalizeNext = true;
-            } else if (capitalizeNext) {
-                buffer[i] = Character.toTitleCase(ch);
-                capitalizeNext = false;
-            }
-        }
-        return new String(buffer);
-    }
-
-    public static String toTellRawCommand(String target, String json) {
-        return "tellraw " + target + " " + json;
     }
 
 }
