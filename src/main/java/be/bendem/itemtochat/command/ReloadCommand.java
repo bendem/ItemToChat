@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 /**
- * Created by Ben on 11/03/14.
+ * @author bendem
  */
 public class ReloadCommand extends AbstractCommand {
 

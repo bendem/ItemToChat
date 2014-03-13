@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
- * Created by Ben on 9/03/14.
+ * @author bendem
  */
 public class ChatListener implements Listener {
 

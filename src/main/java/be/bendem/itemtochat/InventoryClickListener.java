@@ -9,6 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.Material;
 
+/**
+ * @author bendem
+ */
 public class InventoryClickListener implements Listener {
 
     private ItemToChat plugin;

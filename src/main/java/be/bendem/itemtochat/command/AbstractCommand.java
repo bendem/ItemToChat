@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- * Created by Ben on 11/03/14.
+ * @author bendem
  */
 abstract public class AbstractCommand {
 

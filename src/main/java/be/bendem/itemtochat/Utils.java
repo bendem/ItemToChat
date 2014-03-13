@@ -1,7 +1,7 @@
 package be.bendem.itemtochat;
 
 /**
- * Created by Ben on 12/03/14.
+ * @author bendem
  */
 public class Utils {
 

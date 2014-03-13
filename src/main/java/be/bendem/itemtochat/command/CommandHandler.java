@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * Created by Ben on 9/03/14.
+ * @author bendem
  */
 public class CommandHandler implements CommandExecutor {
 

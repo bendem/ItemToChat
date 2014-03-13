@@ -14,6 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
+/**
+ * @author bendem
+ */
 public class ItemStackConverter {
 
     private final ItemStack  itemStack;
