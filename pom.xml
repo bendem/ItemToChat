@@ -5,7 +5,7 @@
 
     <groupId>be.bendem.itemtochat</groupId>
     <artifactId>ItemToChat</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
     <name>ItemToChat</name>
     <url>https://github.com/bendem/ItemToChat</url>
