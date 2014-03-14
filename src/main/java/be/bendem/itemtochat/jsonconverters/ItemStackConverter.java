@@ -101,7 +101,7 @@ public class ItemStackConverter extends AbstractJsonConverter {
         if(jsFireworks != null) {
             jsTag.add("Fireworks", jsFireworks);
         }
-        // Add Fireworks info
+        // Add Firework Star info
         JsonElement jsFireworkStar = new FireworkStarConverter(plugin, itemStack).toJson();
         if(jsFireworkStar != null) {
             jsTag.add("Explosion", jsFireworkStar);
