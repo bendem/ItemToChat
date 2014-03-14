@@ -1,19 +1,18 @@
 package be.bendem.itemtochat.jsonconverters;
 
 import be.bendem.itemtochat.ItemToChat;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-
-import java.util.List;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author bendem
  */
-class FireworksConverter extends AbstractJsonConverter {
+class FireworksConverter extends AbstractFireworkConverter {
 
     protected FireworksConverter(ItemToChat plugin, ItemStack itemStack) {
         super(plugin, itemStack);
@@ -25,19 +24,23 @@ class FireworksConverter extends AbstractJsonConverter {
     }
 
     private JsonObject createFireworksSection() {
-        if(itemStack.getType() != Material.FIREWORK) {
+        if(!itemStack.hasItemMeta()) {
+            return null;
+        }
+        ItemMeta meta = itemStack.getItemMeta();
+        if(!(meta instanceof FireworkMeta)) {
             return null;
         }
 
+        FireworkMeta fireworkMeta = (FireworkMeta) meta;
         JsonObject jsFirework = new JsonObject();
-
-        FireworkMeta fireworkMeta = (FireworkMeta) itemStack.getItemMeta();
-        List<FireworkEffect> fireworkEffects = fireworkMeta.getEffects();
+        JsonArray jsEffects = new JsonArray();
+        for(FireworkEffect effect : fireworkMeta.getEffects()) {
+            jsEffects.add(convertEffect(effect));
+        }
 
         jsFirework.addProperty("Flight", fireworkMeta.getPower());
-
-        for(FireworkEffect effect : fireworkEffects) {
-        }
+        jsFirework.add("Explosions", jsEffects);
 
         return jsFirework;
     }

@@ -2,7 +2,6 @@ package be.bendem.itemtochat.jsonconverters;
 
 import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.Utils;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,14 +32,8 @@ public class ItemStackConverter extends AbstractJsonConverter {
         this.textAfter = textAfter;
     }
 
-    public static String toTellRawCommand(String target, String json) {
-        Gson gson = new Gson();
-        return "tellraw " + target + " " + json;
-    }
-
     public String toTellRawCommand(String target) {
-        Gson gson = new Gson();
-        return "tellraw " + target + " " + gson.toJson(toJson());
+        return "tellraw " + target + " " + toString();
     }
 
     public JsonElement toJson() {
@@ -107,6 +100,11 @@ public class ItemStackConverter extends AbstractJsonConverter {
         JsonElement jsFireworks = new FireworksConverter(plugin, itemStack).toJson();
         if(jsFireworks != null) {
             jsTag.add("Fireworks", jsFireworks);
+        }
+        // Add Fireworks info
+        JsonElement jsFireworkStar = new FireworkStarConverter(plugin, itemStack).toJson();
+        if(jsFireworkStar != null) {
+            jsTag.add("Explosion", jsFireworkStar);
         }
         // Add Display info
         JsonObject jsDisplay = createDisplaySection();
