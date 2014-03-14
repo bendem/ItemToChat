@@ -34,10 +34,10 @@ public class ChatListener implements Listener {
 
         String before = "<" + e.getPlayer().getDisplayName() + "> " + message.substring(0, message.indexOf(chatStringToReplace));
         String after = message.substring(message.indexOf(chatStringToReplace) + chatStringToReplace.length());
-        String json = new ItemStackConverter(e.getPlayer().getItemInHand(), plugin, before, after).toJson();
+        ItemStackConverter itemStackConverter = new ItemStackConverter(plugin, e.getPlayer().getItemInHand(), before, after);
         for(Player p : e.getRecipients()) {
-            plugin.logger.info("command : " + ItemStackConverter.toTellRawCommand(p.getName(), json));
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackConverter.toTellRawCommand(p.getName(), json));
+            plugin.logger.info("json : " + itemStackConverter.toString());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), itemStackConverter.toTellRawCommand(p.getName()));
         }
 
         e.setCancelled(true);

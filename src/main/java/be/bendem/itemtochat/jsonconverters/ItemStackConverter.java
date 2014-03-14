@@ -4,51 +4,50 @@ import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /**
  * @author bendem
  */
-public class ItemStackConverter {
+public class ItemStackConverter extends AbstractJsonConverter {
 
-    private final ItemStack  itemStack;
-    private final ItemToChat plugin;
-    private final String     textBefore;
-    private final String     textAfter;
+    private final String textBefore;
+    private final String textAfter;
 
-    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin) {
-        this(itemStack, plugin, null, null);
+    public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack) {
+        super(plugin, itemStack);
+        this.textBefore = null;
+        this.textAfter = null;
     }
 
-    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin, String textBefore) {
-        this(itemStack, plugin, textBefore, null);
+    public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack, final String textBefore) {
+        this(plugin, itemStack, textBefore, null);
     }
 
-    public ItemStackConverter(final ItemStack itemStack, final ItemToChat plugin, final String textBefore, final String textAfter) {
-        this.itemStack = itemStack;
-        this.plugin = plugin;
+    public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack, final String textBefore, final String textAfter) {
+        super(plugin, itemStack);
         this.textBefore = textBefore;
         this.textAfter = textAfter;
     }
 
     public static String toTellRawCommand(String target, String json) {
+        Gson gson = new Gson();
         return "tellraw " + target + " " + json;
     }
 
-    public String toJson() {
+    public String toTellRawCommand(String target) {
         Gson gson = new Gson();
+        return "tellraw " + target + " " + gson.toJson(toJson());
+    }
+
+    public JsonElement toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("text", textBefore == null ? "" : textBefore);
         json.add("extra", createExtraSection());
-        return gson.toJson(json);
+        return json;
     }
 
     private JsonArray createExtraSection() {
@@ -99,14 +98,17 @@ public class ItemStackConverter {
 
     private JsonObject createTagSection() {
         JsonObject jsTag = new JsonObject();
-        JsonArray jsEnchants = createEnchantmentsSection();
+        // Add Enchants info
+        JsonElement jsEnchants = new EnchantmentsConverter(plugin, itemStack).toJson();
         if(jsEnchants != null) {
             jsTag.add("ench", jsEnchants);
         }
-        JsonObject jsFirework = createFireworkSection();
-        if(jsEnchants != null) {
-            jsTag.add("Fireworks", jsFirework);
+        // Add Fireworks info
+        JsonElement jsFireworks = new FireworksConverter(plugin, itemStack).toJson();
+        if(jsFireworks != null) {
+            jsTag.add("Fireworks", jsFireworks);
         }
+        // Add Display info
         JsonObject jsDisplay = createDisplaySection();
         if(jsDisplay != null) {
             jsTag.add("display", jsDisplay);
@@ -126,43 +128,6 @@ public class ItemStackConverter {
         JsonObject jsDisplay = new JsonObject();
         jsDisplay.addProperty("Name", meta.getDisplayName());
         return jsDisplay;
-    }
-
-    private JsonObject createFireworkSection() {
-        if(itemStack.getType() != Material.FIREWORK) {
-            return null;
-        }
-
-        JsonObject jsFirework = new JsonObject();
-
-        FireworkMeta fireworkMeta = (FireworkMeta) itemStack.getItemMeta();
-        List<FireworkEffect> fireworkEffects = fireworkMeta.getEffects();
-
-        jsFirework.addProperty("Flight", fireworkMeta.getPower());
-
-        for(FireworkEffect effect : fireworkEffects) {
-        }
-
-        return jsFirework;
-    }
-
-    @SuppressWarnings("deprecation")
-    private JsonArray createEnchantmentsSection() {
-        if(itemStack.getEnchantments().size() == 0) {
-            return null;
-        }
-        JsonArray enchants = new JsonArray();
-
-        for(Enchantment enchant : itemStack.getEnchantments().keySet()) {
-            JsonObject jsEnchant = new JsonObject();
-            // TODO Use the new minecraft names
-            // getId is deprecated but we need it since minecraft don't handle bukkit values
-            jsEnchant.addProperty("id", enchant.getId());
-            jsEnchant.addProperty("lvl", itemStack.getEnchantmentLevel(enchant));
-            enchants.add(jsEnchant);
-        }
-
-        return enchants;
     }
 
     private String getItemColor() {

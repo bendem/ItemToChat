@@ -26,16 +26,13 @@ public class InventoryClickListener implements Listener {
             return;
         }
 
-        plugin.logger.info("===============================");
-        plugin.logger.info("Click!");
+        ItemStackConverter itemStackConverter = new ItemStackConverter(plugin, e.getCurrentItem(), "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ");
 
-        String json = new ItemStackConverter(e.getCurrentItem(), plugin, "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ").toJson();
-
-        plugin.logger.info(json);
+        plugin.logger.info("json: " + itemStackConverter.toString());
 
         // TODO Permission check for sender and receivers
         for(Player p : Bukkit.getOnlinePlayers()) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ItemStackConverter.toTellRawCommand(p.getName(), json));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), itemStackConverter.toTellRawCommand(p.getName()));
         }
     }
 
