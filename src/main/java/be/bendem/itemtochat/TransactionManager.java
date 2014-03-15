@@ -31,7 +31,7 @@ public class TransactionManager {
     public void loadTransactions() {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         if(!config.contains("transactions")) {
-            plugin.logger.info("Empty file, ignored...");
+            plugin.logger.info("Empty transaction file, ignored...");
             return;
         }
 
