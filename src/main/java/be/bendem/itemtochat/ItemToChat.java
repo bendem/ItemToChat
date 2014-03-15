@@ -1,6 +1,9 @@
 package be.bendem.itemtochat;
 
 import be.bendem.itemtochat.command.CommandHandler;
+import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -37,6 +40,16 @@ public class ItemToChat extends JavaPlugin {
 
     public TransactionManager getTransactionManager() {
         return transactionManager;
+    }
+
+    public static void dispatchCommand(String to, ItemStackConverter converter) {
+        if(to == null) {
+            for(Player p : Bukkit.getOnlinePlayers()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), converter.toTellRawCommand(p.getName()));
+            }
+        } else {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), converter.toTellRawCommand(to));
+        }
     }
 
 }

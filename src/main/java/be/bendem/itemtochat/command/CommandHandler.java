@@ -1,6 +1,7 @@
 package be.bendem.itemtochat.command;
 
 import be.bendem.itemtochat.ItemToChat;
+import be.bendem.itemtochat.Transaction;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -24,6 +25,7 @@ public class CommandHandler implements CommandExecutor {
         aliases.put("sh", "show");
         aliases.put("s", "send");
         aliases.put("g", "give");
+        aliases.put("t", "transaction");
 
         commandRegistry = new HashMap<>();
         commandRegistry.put("show", new ShowCommand(plugin));
@@ -31,6 +33,8 @@ public class CommandHandler implements CommandExecutor {
         commandRegistry.put("give", new GiveCommand(plugin));
         commandRegistry.put("help", new HelpCommand(plugin));
         commandRegistry.put("reload", new ReloadCommand(plugin));
+        commandRegistry.put("transaction", new TransactionCommand(plugin));
+        commandRegistry.put("internal", new InternalCommand(plugin));
     }
 
     @Override
