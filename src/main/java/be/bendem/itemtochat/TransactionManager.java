@@ -49,6 +49,7 @@ public class TransactionManager {
         config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
 
         for(Transaction transaction: transactions.values()) {
+            // TODO  Check why hashCode don't always return the same value :/
             config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
         }
 

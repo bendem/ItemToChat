@@ -39,8 +39,6 @@ public class CommandHandler implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        // TODO See https://github.com/KittehOrg/Pakkit/blob/master/src/main/java/org/kitteh/pakkit/AbstractCommand.java
-        // TODO See https://github.com/Ribesg/NPlugins/blob/master/NCuboid/src/main/java/fr/ribesg/bukkit/ncuboid/commands/MainCommandExecutor.java#L76
         if(args.length == 0 || !command.getName().equalsIgnoreCase("itc")) {
             return false;
         }

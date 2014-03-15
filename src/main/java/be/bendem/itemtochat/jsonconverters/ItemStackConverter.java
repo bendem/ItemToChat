@@ -129,7 +129,6 @@ public class ItemStackConverter extends AbstractJsonConverter {
     }
 
     private String getItemColor() {
-        // TODO Create a config file for each in game item
         // TODO handle wool / stained glass / leather armor (using autodetect-colors)
         return plugin.getConfig().getString("item-colors." + itemStack.getType().name().toLowerCase(), "white");
     }
