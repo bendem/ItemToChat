@@ -39,19 +39,19 @@ public class TransactionManager {
         }
 
         for(String key : config.getKeys(false)) {
+            plugin.logger.info("Loading transaction : " + key);
             add(Transaction.deserialize(config.getConfigurationSection(key)));
         }
     }
 
     public void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
-        List<MemorySection> serializedTransactions = new ArrayList<>();
+        config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
+
         for(Transaction transaction: transactions.values()) {
-            serializedTransactions.add(Transaction.serialize(transaction));
+            config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
         }
 
-        config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
-        config.set("transactions", serializedTransactions);
         try {
             config.save(file);
         } catch(IOException e) {

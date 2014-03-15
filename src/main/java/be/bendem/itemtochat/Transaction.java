@@ -27,7 +27,7 @@ public class Transaction {
         this.sender = sender;
         this.itemStack = itemStack;
         this.timeStamp = timeStamp;
-        this.lifeTime = lifeTime * 1000;
+        this.lifeTime = lifeTime;
         this.type = type;
     }
 
@@ -46,14 +46,12 @@ public class Transaction {
 
     public static MemorySection serialize(Transaction transaction) {
         MemoryConfiguration serialized = new MemoryConfiguration();
-        MemoryConfiguration transactionSerialized = new MemoryConfiguration();
 
-        transactionSerialized.set("sender", transaction.getSender());
-        transactionSerialized.set("itemstack", transaction.getItemStack());
-        transactionSerialized.set("timestamp", transaction.getTimeStamp());
-        transactionSerialized.set("lifetime", transaction.getLifeTime());
+        serialized.set("sender", transaction.getSender());
+        serialized.set("itemstack", transaction.getItemStack());
+        serialized.set("timestamp", transaction.getTimeStamp());
+        serialized.set("lifetime", transaction.getLifeTime());
 
-        serialized.set(String.valueOf(transaction.hashCode()), transactionSerialized);
         return serialized;
     }
 

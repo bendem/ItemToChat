@@ -41,7 +41,7 @@ public class SendCommand extends AbstractCommand {
 
         // TODO Message from config
         ItemStackConverter converter = new ItemStackConverter(plugin, player.getItemInHand(), player.getName() + " is sending ");
-        int transacNumber = plugin.getTransactionManager().add(new Transaction(player.getName(), player.getItemInHand(), new Date().getTime(), 60)); // TODO Lifetime from config!
+        int transacNumber = plugin.getTransactionManager().add(new Transaction(player.getName(), player.getItemInHand(), new Date().getTime(), 60_000)); // TODO Lifetime from config!
         plugin.logger.info("Transaction created : " + transacNumber);
         ItemToChat.dispatchCommand(sendTo, converter);
     }
