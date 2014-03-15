@@ -45,9 +45,8 @@ public class TransactionManager {
 
     public void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
-        ArrayList<MemorySection> serializedTransactions = new ArrayList<>();
-        for(Map.Entry<Integer, Transaction> entry: transactions.entrySet()) {
-            Transaction transaction = entry.getValue();
+        List<MemorySection> serializedTransactions = new ArrayList<>();
+        for(Transaction transaction: transactions.values()) {
             serializedTransactions.add(Transaction.serialize(transaction));
         }
 
