@@ -12,17 +12,23 @@ You can just middle click an item and it will send it to the chat.
 ## Commands
 
 - ``/itc reload`` : Guess what it does :-)
-- ``/itc send <player> <item>`` : Sends an item to a player trough the chat
+- ``/itc send [player]`` : Show an item in the chat
+- ``/itc send [player]`` : Sends an item to a player trough the chat
 (when he click it, the item is taken from you inventory is put in his)
-- ``/itc give <player> <item>`` : Same than send but the item is not taken from your inventory
+- ``/itc give [player]`` : Same than send but the item is not taken from your inventory
+- ``/itc transaction <clear> [player]`` : Clear all transactions (from a player if specified)
 
 ## Permissions
 
-- ``itemtochat.reload`` : Lets you use the reload command
-- ``itemtochat.send.click`` : Lets you display an item by middle clicking it
-- ``itemtochat.send.chat`` : Lets you display an item by typing ``[item]`` (by default) in the chat
-- ``insert here a node to send an item trough chat``
-- ``insert here a node to give an item trough chat``
+``itemtochat.*``               : Give access to all ItemToChat features
+``itemtochat.commands.*``      : Give access to all ItemToChat commands
+``itemtochat.commands.reload`` : Reload config from file (default is op)
+``itemtochat.commands.show``   : Use /itc show command (default is true)
+``itemtochat.commands.send``   : Use /itc send command (default is true)
+``itemtochat.commands.give``   : Use /itc give command (default is op)
+``itemtochat.chat.*``          : Give access to the chat related features
+``itemtochat.chat.message``    : Show an item into the chat using a placeholder (default is true)
+``itemtochat.chat.click``      : Click to get item on usable messages (default is true)
 
 ## Config
 
@@ -33,7 +39,9 @@ You can just middle click an item and it will send it to the chat.
 - ``[X]`` Display item in the chat by clicking it
 - ``[X]`` Display item in the chat by typing ``[item]`` in the chat
 - ``[ ]`` Display item in the chat with the possibility to click it to get it
+- ``[ ]`` Possibility for admins to clear the transactions
 - ``[ ]`` Handle all item data
+- ``[ ]`` Add more stuff to the config
 
 ## Continous development
 
