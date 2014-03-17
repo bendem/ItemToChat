@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author bendem
@@ -43,7 +44,7 @@ public class TransactionManager {
 
     public synchronized void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
-        config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
+        config.options().header("Do not modify this file unless you want your house to be destroyed by angry galactic camels!").copyHeader(true);
 
         for(Transaction transaction: transactions.values()) {
             // TODO  Check why hashCode don't always return the same value :/
@@ -57,8 +58,16 @@ public class TransactionManager {
         }
     }
 
+    public synchronized void clean() {
+        for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
+            if(!entry.getValue().isValid()) {
+                transactions.remove(entry.getKey());
+            }
+        }
+    }
+
     public synchronized int add(Transaction transaction) {
-        if(transaction.isValid()) {
+        if(transaction.isValid() && !contains(transaction)) {
             transactions.put(transaction.hashCode(), transaction);
             return transaction.hashCode();
         }
@@ -67,7 +76,7 @@ public class TransactionManager {
 
     public synchronized void remove(Transaction transaction) {
         if(contains(transaction)) {
-            transactions.remove(transaction);
+            transactions.remove(transaction.hashCode());
         }
     }
 

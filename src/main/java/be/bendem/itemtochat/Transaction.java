@@ -76,7 +76,7 @@ public class Transaction {
     }
 
     public boolean isValid() {
-        return new Date().getTime() - lifeTime < timeStamp;
+        return new Date().getTime() < timeStamp + lifeTime;
     }
 
     @Override
