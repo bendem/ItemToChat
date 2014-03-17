@@ -1,5 +1,8 @@
 chat-string-to-replace: "[item]"
 
+# Time in seconds between transactions saves
+autosave-delay: 300
+
 format:
     before: "["
     after: "]"

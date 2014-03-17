@@ -1,16 +1,13 @@
 package be.bendem.itemtochat;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author bendem
@@ -31,7 +28,7 @@ public class TransactionManager {
         createFile(false);
     }
 
-    public void loadTransactions() {
+    public synchronized void loadTransactions() {
         ConfigurationSection config = YamlConfiguration.loadConfiguration(file).getConfigurationSection("transactions");
         if(config == null) {
             plugin.logger.info("File ignored, no transactions found...");
@@ -44,7 +41,7 @@ public class TransactionManager {
         }
     }
 
-    public void saveTransactions() {
+    public synchronized void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
         config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
 
@@ -60,12 +57,15 @@ public class TransactionManager {
         }
     }
 
-    public int add(Transaction transaction) {
-        transactions.put(transaction.hashCode(), transaction);
-        return transaction.hashCode();
+    public synchronized int add(Transaction transaction) {
+        if(transaction.isValid()) {
+            transactions.put(transaction.hashCode(), transaction);
+            return transaction.hashCode();
+        }
+        return 0;
     }
 
-    public void remove(Transaction transaction) {
+    public synchronized void remove(Transaction transaction) {
         if(contains(transaction)) {
             transactions.remove(transaction);
         }
@@ -84,7 +84,7 @@ public class TransactionManager {
     }
 
     public Collection<Transaction> getTransactions() {
-        return transactions.values();
+        return Collections.unmodifiableCollection(transactions.values());
     }
 
     private void createFile(boolean replace) {

@@ -5,6 +5,8 @@ package be.bendem.itemtochat;
  */
 public class Utils {
 
+    public static final int TICKS_BY_SECOND = 20;
+
     public static String capitalize(final String str) {
         if (str.isEmpty()) {
             return str;
@@ -22,6 +24,10 @@ public class Utils {
         }
 
         return new String(buffer);
+    }
+
+    public static long secondsToTicks(long seconds) {
+        return TICKS_BY_SECOND * seconds;
     }
 
 }

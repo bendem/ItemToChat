@@ -5,6 +5,7 @@ import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ public class ItemToChat extends JavaPlugin {
 
     public  Logger             logger;
     private TransactionManager transactionManager;
+    private BukkitTask         autosaveTask;
 
     @Override
     public void onEnable() {
@@ -27,6 +29,18 @@ public class ItemToChat extends JavaPlugin {
         transactionManager = new TransactionManager(this);
         transactionManager.loadTransactions();
 
+        // Start autosave
+        long autosaveDelay = Utils.secondsToTicks(getConfig().getLong("autosave-delay", 300));
+        autosaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+            @Override
+            public void run() {
+                transactionManager.saveTransactions();
+            }
+        }, autosaveDelay, autosaveDelay);
+        if(autosaveTask.getTaskId() == -1) {
+            throw new RuntimeException("Could not start autosave task!");
+        }
+
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
@@ -35,6 +49,7 @@ public class ItemToChat extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        autosaveTask.cancel();
         transactionManager.saveTransactions();
     }
 
