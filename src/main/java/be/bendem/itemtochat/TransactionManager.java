@@ -29,6 +29,9 @@ public class TransactionManager {
         createFile(false);
     }
 
+    /**
+     * Load all the transactions from the file and clean the Map of the unvalid transactions
+     */
     public synchronized void loadTransactions() {
         ConfigurationSection config = YamlConfiguration.loadConfiguration(file).getConfigurationSection("transactions");
         if(config == null) {
@@ -40,8 +43,12 @@ public class TransactionManager {
             plugin.logger.info("Loading transaction : " + key);
             add(Transaction.deserialize(config.getConfigurationSection(key)));
         }
+        clean();
     }
 
+    /**
+     * Save all the transactions to the file (the transactions in the file are lost)
+     */
     public synchronized void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
         config.options().header("Do not modify this file unless you want your house to be destroyed by angry galactic camels!").copyHeader(true);
@@ -58,6 +65,9 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Remove all invalid transactions from the Map
+     */
     public synchronized void clean() {
         for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
             if(!entry.getValue().isValid()) {
@@ -66,6 +76,10 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Add a transaction to the Map
+     * @return The hash of the map or 0 if it hasn't been inserted
+     */
     public synchronized int add(Transaction transaction) {
         if(transaction.isValid() && !contains(transaction)) {
             transactions.put(transaction.hashCode(), transaction);
@@ -74,28 +88,71 @@ public class TransactionManager {
         return 0;
     }
 
+    /**
+     * Remove a specific transaction
+     * @param transaction Transaction to remove
+     */
     public synchronized void remove(Transaction transaction) {
-        if(contains(transaction)) {
-            transactions.remove(transaction.hashCode());
+        remove(transaction.hashCode());
+    }
+
+    /**
+     * Remove a specific transaction
+     * @param transactionHash Hash code of the transaction
+     */
+    public synchronized void remove(int transactionHash) {
+        if(contains(transactionHash)) {
+            transactions.remove(transactionHash);
         }
     }
 
+    /**
+     * Remove all transactions from a specific user
+     * @param player Player name
+     * @return Count of deleted transactions
+     */
+    public synchronized int remove(String player) {
+        int count = 0;
+        for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
+            if(entry.getValue().getSender().equalsIgnoreCase(player)) {
+                remove(entry.getKey());
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Check if a transaction is already in the Map
+     */
     public boolean contains(Transaction transaction) {
         return transactions.containsValue(transaction);
     }
 
+    /**
+     * Check if a transaction is already in the Map
+     */
     public boolean contains(int transactionHash) {
         return transactions.containsKey(transactionHash);
     }
 
+    /**
+     * Get a transaction from the Map using its hash code
+     */
     public Transaction get(int transactionHash) {
         return transactions.get(transactionHash);
     }
 
+    /**
+     * Get a copy of the transactions in the Map
+     */
     public Collection<Transaction> getTransactions() {
         return Collections.unmodifiableCollection(transactions.values());
     }
 
+    /**
+     * Create the transation file
+     * @param replace Should the current file be overwritten
+     */
     private void createFile(boolean replace) {
         if(!file.exists() || replace) {
             try {

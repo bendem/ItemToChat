@@ -34,6 +34,7 @@ public class ItemToChat extends JavaPlugin {
         autosaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
             @Override
             public void run() {
+                logger.info("Autosaving...");
                 transactionManager.saveTransactions();
             }
         }, autosaveDelay, autosaveDelay);
