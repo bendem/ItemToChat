@@ -1,13 +1,16 @@
 package be.bendem.itemtochat;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author bendem
@@ -17,40 +20,39 @@ public class TransactionManager {
     public static final String FILENAME = "transactions.yml";
 
     private final ItemToChat           plugin;
-    private final HashSet<Transaction> transactions;
+    private final HashMap<Integer, Transaction> transactions;
     private final File                 file;
 
     public TransactionManager(ItemToChat plugin) {
         this.plugin = plugin;
-        this.transactions = new HashSet<>();
+        this.transactions = new HashMap<>();
 
         file = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + FILENAME);
         createFile(false);
     }
 
     public void loadTransactions() {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if(!config.contains("transactions")) {
-            plugin.logger.info("Empty transaction file, ignored...");
+        ConfigurationSection config = YamlConfiguration.loadConfiguration(file).getConfigurationSection("transactions");
+        if(config == null) {
+            plugin.logger.info("File ignored, no transactions found...");
             return;
         }
 
-        ArrayList<LinkedHashMap> sections = (ArrayList) config.getList("transactions");
-        for(LinkedHashMap section : sections) {
-            add(Transaction.deserialize(section));
+        for(String key : config.getKeys(false)) {
+            plugin.logger.info("Loading transaction : " + key);
+            add(Transaction.deserialize(config.getConfigurationSection(key)));
         }
     }
 
     public void saveTransactions() {
         YamlConfiguration config = new YamlConfiguration();
-        ArrayList<MemorySection> serializedTransactions = new ArrayList<>();
-        for(Transaction transaction : transactions) {
-            plugin.logger.info("Serializing...");
-            serializedTransactions.add(Transaction.serialize(transaction));
+        config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
+
+        for(Transaction transaction: transactions.values()) {
+            // TODO  Check why hashCode don't always return the same value :/
+            config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
         }
 
-        config.options().header("Do not modify this file except if you want your house to be destroyed by angry galactic camels!").copyHeader(true);
-        config.set("transactions", serializedTransactions);
         try {
             config.save(file);
         } catch(IOException e) {
@@ -58,8 +60,9 @@ public class TransactionManager {
         }
     }
 
-    public void add(Transaction transaction) {
-        transactions.add(transaction);
+    public int add(Transaction transaction) {
+        transactions.put(transaction.hashCode(), transaction);
+        return transaction.hashCode();
     }
 
     public void remove(Transaction transaction) {
@@ -69,7 +72,19 @@ public class TransactionManager {
     }
 
     public boolean contains(Transaction transaction) {
-        return transactions.contains(transaction);
+        return transactions.containsValue(transaction);
+    }
+
+    public boolean contains(int transactionHash) {
+        return transactions.containsKey(transactionHash);
+    }
+
+    public Transaction get(int transactionHash) {
+        return transactions.get(transactionHash);
+    }
+
+    public Collection<Transaction> getTransactions() {
+        return transactions.values();
     }
 
     private void createFile(boolean replace) {

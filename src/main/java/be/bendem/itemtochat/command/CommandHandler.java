@@ -1,6 +1,7 @@
 package be.bendem.itemtochat.command;
 
 import be.bendem.itemtochat.ItemToChat;
+import be.bendem.itemtochat.Transaction;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -24,6 +25,7 @@ public class CommandHandler implements CommandExecutor {
         aliases.put("sh", "show");
         aliases.put("s", "send");
         aliases.put("g", "give");
+        aliases.put("t", "transaction");
 
         commandRegistry = new HashMap<>();
         commandRegistry.put("show", new ShowCommand(plugin));
@@ -31,12 +33,12 @@ public class CommandHandler implements CommandExecutor {
         commandRegistry.put("give", new GiveCommand(plugin));
         commandRegistry.put("help", new HelpCommand(plugin));
         commandRegistry.put("reload", new ReloadCommand(plugin));
+        commandRegistry.put("transaction", new TransactionCommand(plugin));
+        commandRegistry.put("internal", new InternalCommand(plugin));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
-        // TODO See https://github.com/KittehOrg/Pakkit/blob/master/src/main/java/org/kitteh/pakkit/AbstractCommand.java
-        // TODO See https://github.com/Ribesg/NPlugins/blob/master/NCuboid/src/main/java/fr/ribesg/bukkit/ncuboid/commands/MainCommandExecutor.java#L76
         if(args.length == 0 || !command.getName().equalsIgnoreCase("itc")) {
             return false;
         }

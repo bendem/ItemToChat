@@ -37,7 +37,7 @@ public class ChatListener implements Listener {
         ItemStackConverter itemStackConverter = new ItemStackConverter(plugin, e.getPlayer().getItemInHand(), before, after);
         for(Player p : e.getRecipients()) {
             plugin.logger.info("json : " + itemStackConverter.toString());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), itemStackConverter.toTellRawCommand(p.getName()));
+            ItemToChat.dispatchCommand(p.getName(), itemStackConverter);
         }
 
         e.setCancelled(true);

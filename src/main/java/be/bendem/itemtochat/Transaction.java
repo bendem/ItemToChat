@@ -1,10 +1,12 @@
 package be.bendem.itemtochat;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.LinkedHashMap;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author bendem
@@ -14,21 +16,32 @@ public class Transaction {
     private final String    sender;
     private final ItemStack itemStack;
     private final long      timeStamp;
-    private final int       lifeTime;
+    private final long      lifeTime;
+    private final Type type;
 
-    public Transaction(String sender, ItemStack itemStack, long timeStamp, int lifeTime) {
+    public Transaction(String sender, ItemStack itemStack, long timeStamp, long lifeTime) {
+        this(sender, itemStack, timeStamp, lifeTime, Type.Send);
+    }
+
+    public Transaction(String sender, ItemStack itemStack, long timeStamp, long lifeTime, Type type) {
         this.sender = sender;
         this.itemStack = itemStack;
         this.timeStamp = timeStamp;
         this.lifeTime = lifeTime;
+        this.type = type;
     }
 
-    public static Transaction deserialize(LinkedHashMap section) {
-        if(!section.containsKey("sender") || !section.containsKey("itemstack") || !section.containsKey("timestamp") || !section.containsKey("lifetime")) {
+    public static Transaction deserialize(ConfigurationSection section) {
+        if(!section.contains("sender") || !section.contains("itemstack") || !section.contains("timestamp") || !section.contains("lifetime")) {
             return null;
         }
 
-        return new Transaction((String) section.get("sender"), (ItemStack) section.get("itemstack"), (long) section.get("timestamp"), (int) section.get("lifetime"));
+        String sender = section.getString("sender");
+        ItemStack itemStack = section.getItemStack("itemstack");
+        long timestamp = section.getLong("timestamp");
+        long lifetime = section.getLong("lifetime");
+
+        return new Transaction(sender, itemStack, timestamp, lifetime);
     }
 
     public static MemorySection serialize(Transaction transaction) {
@@ -54,8 +67,16 @@ public class Transaction {
         return timeStamp;
     }
 
-    public int getLifeTime() {
+    public long getLifeTime() {
         return lifeTime;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public boolean isValid() {
+        return new Date().getTime() - lifeTime < timeStamp;
     }
 
     @Override
@@ -86,11 +107,29 @@ public class Transaction {
     }
 
     @Override
+    public String toString() {
+        return "Transaction{" +
+                "sender='" + sender + "'" +
+                ", itemStack=" + itemStack +
+                ", timeStamp=" + timeStamp +
+                ", lifeTime=" + lifeTime +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = sender.hashCode();
-        result = 31 * result + (itemStack != null ? itemStack.hashCode() : 0);
+        result = 31 * result + itemStack.hashCode();
         result = 31 * result + (int) (timeStamp ^ (timeStamp >>> 32));
-        result = 31 * result + lifeTime;
+        result = 31 * result + (int) (lifeTime ^ (lifeTime >>> 32));
+        result = 31 * result + type.hashCode();
         return result;
     }
+
+    public enum Type {
+        Send,
+        Give
+    }
+
 }

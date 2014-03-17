@@ -28,24 +28,34 @@ permissions:
             itemtochat.commands.show: true
             itemtochat.commands.send: true
             itemtochat.commands.give: true
+            itemtochat.commands.transaction: true
 
     itemtochat.commands.reload:
         description: Reload config from file
         default: op
     itemtochat.commands.show:
-        description: Reload config from file
+        description: Use /itc show command
         default: true
     itemtochat.commands.send:
-        description: Reload config from file
+        description: Use /itc send command
         default: true
     itemtochat.commands.give:
-        description: Reload config from file
+        description: Use /itc give command
+        default: op
+    itemtochat.commands.transaction:
+        description: Use /itc transaction command
         default: op
 
-    # TODO Complete these
     itemtochat.chat.*:
-        description: Give access to all ItemToChat commands
+        description: Give access to the chat related features
         children:
             itemtochat.chat.message: true
             itemtochat.chat.click: true
+
+    itemtochat.chat.message:
+        description: Show an item into the chat using a placeholder
+        default: true
+    itemtochat.chat.click:
+        description: Click to get item on usable messages
+        default: true
 
