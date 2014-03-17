@@ -2,6 +2,7 @@ package be.bendem.itemtochat.command.transaction;
 
 import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.command.AbstractCommand;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * @author bendem
  */
-public class TransactionSaveCommand extends AbstractCommand {
+public class TransactionSaveCommand extends AbstractTransactionCommand {
 
     public TransactionSaveCommand(ItemToChat plugin) {
         super(plugin);
@@ -17,17 +18,8 @@ public class TransactionSaveCommand extends AbstractCommand {
 
     @Override
     public void exec(CommandSender sender, List<String> args) {
-
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return false;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return false;
+        plugin.getTransactionManager().saveTransactions();
+        sendLogMessage(sender, "Transaction saved.", ChatColor.GREEN);
     }
 
 }
