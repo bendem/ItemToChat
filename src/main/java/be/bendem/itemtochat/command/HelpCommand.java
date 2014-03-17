@@ -16,6 +16,9 @@ public class HelpCommand extends AbstractCommand {
 
     @Override
     public void exec(CommandSender sender, List<String> args) {
+        if(args.size() == 0) {
+            sender.sendMessage(plugin.getCommand("itc").getUsage());
+        }
     }
 
     @Override
