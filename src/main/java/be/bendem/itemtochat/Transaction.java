@@ -1,10 +1,12 @@
 package be.bendem.itemtochat;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -108,13 +110,10 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "sender='" + sender + "'" +
-                ", itemStack=" + itemStack +
-                ", timeStamp=" + timeStamp +
-                ", lifeTime=" + lifeTime +
-                ", type=" + type +
-                '}';
+        return ChatColor.WHITE + sender + ChatColor.GRAY + " is " + (type == Type.Send ? " sending " : " giving ") +
+            '\n' + ChatColor.WHITE + itemStack + ChatColor.GRAY + " since " + ChatColor.WHITE +
+            (new SimpleDateFormat("H:m:s").format(new Date(timeStamp))) + ChatColor.GRAY + " for " +
+            ChatColor.WHITE + lifeTime/1000 + 's';
     }
 
     @Override
