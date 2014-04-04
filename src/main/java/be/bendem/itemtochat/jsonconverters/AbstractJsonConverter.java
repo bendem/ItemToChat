@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 abstract class AbstractJsonConverter {
 
     protected final ItemToChat plugin;
-    protected final ItemStack itemStack;
+    protected final ItemStack  itemStack;
 
     protected AbstractJsonConverter(ItemToChat plugin, ItemStack itemStack) {
         this.plugin = plugin;

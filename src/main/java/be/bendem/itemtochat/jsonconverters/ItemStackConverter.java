@@ -5,6 +5,7 @@ import be.bendem.itemtochat.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -120,11 +121,19 @@ public class ItemStackConverter extends AbstractJsonConverter {
             return null;
         }
         ItemMeta meta = itemStack.getItemMeta();
-        if(!meta.hasDisplayName()) {
-            return null;
-        }
         JsonObject jsDisplay = new JsonObject();
-        jsDisplay.addProperty("Name", meta.getDisplayName());
+        if(meta.hasDisplayName()) {
+            jsDisplay.addProperty("Name", meta.getDisplayName());
+        }
+        if(meta.hasLore()) {
+            JsonArray jsLore = new JsonArray();
+            for(String lorePart : meta.getLore()) {
+                if(lorePart != null) {
+                    jsLore.add(new JsonPrimitive(lorePart));
+                }
+            }
+            jsDisplay.add("Lore", jsLore);
+        }
         return jsDisplay;
     }
 
