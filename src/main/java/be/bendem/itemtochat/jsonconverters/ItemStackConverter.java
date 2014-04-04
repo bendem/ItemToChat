@@ -107,8 +107,12 @@ public class ItemStackConverter extends AbstractJsonConverter {
         BookConverter bookConverter = new BookConverter(plugin, itemStack);
         JsonElement jsPages = bookConverter.toJson();
         if(jsPages != null) {
-            jsTag.add("author", bookConverter.getAuthor());
-            jsTag.add("title", bookConverter.getTitle());
+            if(bookConverter.getAuthor() != null) {
+                jsTag.add("author", bookConverter.getAuthor());
+            }
+            if(bookConverter.getTitle() != null) {
+                jsTag.add("title", bookConverter.getTitle());
+            }
             jsTag.add("pages", jsPages);
         }
         // Add Fireworks info

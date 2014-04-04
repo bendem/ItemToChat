@@ -33,23 +33,23 @@ public class BookConverter extends AbstractJsonConverter {
         if(bookMeta == null) {
             return null;
         }
-        //List<String> pages = new ArrayList<>(bookMeta.getPages());
-        //for(int i = 0; i < pages.size(); i++) {
+        List<String> pages = new ArrayList<>(bookMeta.getPages());
+        for(int i = 0; i < pages.size(); i++) {
             // TODO Fix line breaks
-        //    pages.set(i, pages.get(i).replace("\n", "\u2029"));
-        //}
-        return listToJsonArray(bookMeta.getPages());
+            pages.set(i, pages.get(i).replace("\n", "\u0010"));
+        }
+        return listToJsonArray(pages);
     }
 
     public JsonPrimitive getAuthor() {
-        if(bookMeta == null) {
+        if(bookMeta == null || bookMeta.getAuthor() == null) {
             return null;
         }
         return new JsonPrimitive(bookMeta.getAuthor());
     }
 
     public JsonElement getTitle() {
-        if(bookMeta == null) {
+        if(bookMeta == null || bookMeta.getTitle() == null) {
             return null;
         }
         return new JsonPrimitive(bookMeta.getTitle());
