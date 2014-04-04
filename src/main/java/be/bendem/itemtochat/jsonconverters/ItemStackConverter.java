@@ -140,13 +140,7 @@ public class ItemStackConverter extends AbstractJsonConverter {
             jsDisplay.addProperty("Name", meta.getDisplayName());
         }
         if(meta.hasLore()) {
-            JsonArray jsLore = new JsonArray();
-            for(String lorePart : meta.getLore()) {
-                if(lorePart != null) {
-                    jsLore.add(new JsonPrimitive(lorePart));
-                }
-            }
-            jsDisplay.add("Lore", jsLore);
+            jsDisplay.add("Lore", listToJsonArray(meta.getLore()));
         }
         return jsDisplay;
     }
