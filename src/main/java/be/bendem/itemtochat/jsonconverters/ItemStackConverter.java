@@ -35,6 +35,14 @@ public class ItemStackConverter extends AbstractJsonConverter {
         return "tellraw " + target + " " + toString();
     }
 
+    public String toGiveCommand(String target) {
+        return "give " + target
+                + " " + itemStack.getTypeId()
+                + " " + itemStack.getAmount()
+                + " " + itemStack.getDurability()
+                + " " + createTagSection();
+    }
+
     public JsonElement toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("text", textBefore == null ? "" : textBefore);
@@ -94,6 +102,14 @@ public class ItemStackConverter extends AbstractJsonConverter {
         JsonElement jsEnchants = new EnchantmentsConverter(plugin, itemStack).toJson();
         if(jsEnchants != null) {
             jsTag.add("ench", jsEnchants);
+        }
+        // Add Book info
+        BookConverter bookConverter = new BookConverter(plugin, itemStack);
+        JsonElement jsPages = bookConverter.toJson();
+        if(jsPages != null) {
+            jsTag.add("author", bookConverter.getAuthor());
+            jsTag.add("title", bookConverter.getTitle());
+            jsTag.add("pages", jsPages);
         }
         // Add Fireworks info
         JsonElement jsFireworks = new FireworksConverter(plugin, itemStack).toJson();
