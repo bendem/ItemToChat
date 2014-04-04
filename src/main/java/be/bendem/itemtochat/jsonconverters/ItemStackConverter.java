@@ -18,9 +18,7 @@ public class ItemStackConverter extends AbstractJsonConverter {
     private final String textAfter;
 
     public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack) {
-        super(plugin, itemStack);
-        this.textBefore = null;
-        this.textAfter = null;
+        this(plugin, itemStack, null, null);
     }
 
     public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack, final String textBefore) {
