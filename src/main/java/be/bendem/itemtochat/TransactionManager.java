@@ -17,9 +17,9 @@ public class TransactionManager {
 
     public static final String FILENAME = "transactions.yml";
 
-    private final ItemToChat           plugin;
+    private final ItemToChat                    plugin;
     private final HashMap<Integer, Transaction> transactions;
-    private final File                 file;
+    private final File                          file;
 
     public TransactionManager(ItemToChat plugin) {
         this.plugin = plugin;

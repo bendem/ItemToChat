@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * @author bendem
