@@ -1,7 +1,6 @@
 package be.bendem.itemtochat;
 
 import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class ChatListener implements Listener {
 
     private final ItemToChat plugin;
-    private String chatStringToReplace;
+    private       String     chatStringToReplace;
 
     public ChatListener(ItemToChat plugin) {
         this.plugin = plugin;

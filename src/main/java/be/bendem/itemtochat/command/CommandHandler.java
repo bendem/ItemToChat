@@ -51,7 +51,7 @@ public class CommandHandler implements CommandExecutor {
 
             if(!c.hasPermission(sender)) {
                 c.sendLogMessage(sender, "You don't have the permission to use that command.");
-            } else if (sender instanceof ConsoleCommandSender && !c.canBeUsedFromConsole()) {
+            } else if(sender instanceof ConsoleCommandSender && !c.canBeUsedFromConsole()) {
                 c.sendLogMessage(sender, "You can't use this command from the console.");
             } else {
                 c.exec(sender, Arrays.asList(args).subList(1, args.length));

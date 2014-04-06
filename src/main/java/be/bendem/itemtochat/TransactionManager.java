@@ -57,7 +57,7 @@ public class TransactionManager {
         YamlConfiguration config = new YamlConfiguration();
         config.options().header("Do not modify this file unless you want your house to be destroyed by angry galactic camels!").copyHeader(true);
 
-        for(Transaction transaction: transactions.values()) {
+        for(Transaction transaction : transactions.values()) {
             // TODO  Check why hashCode don't always return the same value :/
             if(transaction.isValid()) {
                 config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
@@ -84,6 +84,7 @@ public class TransactionManager {
 
     /**
      * Add a transaction to the Map
+     *
      * @return The hash of the map or 0 if it hasn't been inserted
      */
     public synchronized int add(Transaction transaction) {
@@ -96,6 +97,7 @@ public class TransactionManager {
 
     /**
      * Remove a specific transaction
+     *
      * @param transaction Transaction to remove
      */
     public synchronized void remove(Transaction transaction) {
@@ -104,6 +106,7 @@ public class TransactionManager {
 
     /**
      * Remove a specific transaction
+     *
      * @param transactionHash Hash code of the transaction
      */
     public synchronized void remove(int transactionHash) {
@@ -114,7 +117,9 @@ public class TransactionManager {
 
     /**
      * Remove all transactions from a specific user
+     *
      * @param player Player name
+     *
      * @return Count of deleted transactions
      */
     public synchronized int remove(UUID player) {
@@ -157,6 +162,7 @@ public class TransactionManager {
 
     /**
      * Create the transation file
+     *
      * @param replace Should the current file be overwritten
      */
     private void createFile(boolean replace) {

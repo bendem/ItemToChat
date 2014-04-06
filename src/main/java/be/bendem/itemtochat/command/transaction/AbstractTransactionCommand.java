@@ -4,8 +4,6 @@ import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.command.AbstractCommand;
 import org.bukkit.command.CommandSender;
 
-import java.util.List;
-
 /**
  * @author bendem
  */
