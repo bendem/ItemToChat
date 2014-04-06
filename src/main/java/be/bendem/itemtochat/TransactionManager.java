@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,9 +76,10 @@ public class TransactionManager {
      * Remove all invalid transactions from the Map
      */
     public synchronized void clean() {
-        for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
-            if(!entry.getValue().isValid()) {
-                transactions.remove(entry.getKey());
+        Iterator<Map.Entry<Integer, Transaction>> it = transactions.entrySet().iterator();
+        while(it.hasNext()) {
+            if(!it.next().getValue().isValid()) {
+                it.remove();
             }
         }
     }
@@ -124,9 +126,11 @@ public class TransactionManager {
      */
     public synchronized int remove(UUID player) {
         int count = 0;
-        for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
-            if(entry.getValue().getSender().equals(player)) {
-                remove(entry.getKey());
+        Iterator<Map.Entry<Integer, Transaction>> it = transactions.entrySet().iterator();
+        while(it.hasNext()) {
+            if(it.next().getValue().getSender().equals(player)) {
+                it.remove();
+                ++count;
             }
         }
         return count;
