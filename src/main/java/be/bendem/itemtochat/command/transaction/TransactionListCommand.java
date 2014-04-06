@@ -27,14 +27,18 @@ public class TransactionListCommand extends AbstractTransactionCommand {
         }
 
         Collection<Transaction> transactions = plugin.getTransactionManager().getTransactions();
-        if(transactions.isEmpty()) {
-            sendLogMessage(sender, "No transactions...");
-        }
+        int transactionNb = 0;
         for(Transaction transaction : transactions) {
-            if(player != null && !transaction.getSender().equals(player.getUniqueId())) {
+            if(player != null && !transaction.getSender().equals(player.getUniqueId()) || !transaction.isValid()) {
                 continue;
             }
             sendLogMessage(sender, "Transaction " + transaction.hashCode() + " : " + transaction.toString(), ChatColor.GRAY);
+            ++transactionNb;
+        }
+        if(transactionNb == 0) {
+            sendLogMessage(sender, "No transactions...");
+        } else {
+            sendLogMessage(sender, "Total transactions : " + ChatColor.BOLD + transactionNb, ChatColor.GRAY);
         }
     }
 

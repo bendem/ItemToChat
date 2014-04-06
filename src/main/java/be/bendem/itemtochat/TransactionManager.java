@@ -42,7 +42,10 @@ public class TransactionManager {
 
         for(String key : config.getKeys(false)) {
             plugin.logger.info("Loading transaction : " + key);
-            add(Transaction.deserialize(config.getConfigurationSection(key)));
+            Transaction transaction = Transaction.deserialize(config.getConfigurationSection(key));
+            if(transaction.isValid()) {
+                add(transaction);
+            }
         }
         clean();
     }
@@ -56,7 +59,9 @@ public class TransactionManager {
 
         for(Transaction transaction: transactions.values()) {
             // TODO  Check why hashCode don't always return the same value :/
-            config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
+            if(transaction.isValid()) {
+                config.set("transactions." + transaction.hashCode(), Transaction.serialize(transaction));
+            }
         }
 
         try {
