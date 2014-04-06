@@ -3,6 +3,7 @@ chat-string-to-replace: "[item]"
 # Time in seconds between transactions saves
 autosave-delay: 300
 
+# What will be displayed around the item name in the chat
 format:
     before: "["
     after: "]"

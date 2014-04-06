@@ -2,7 +2,6 @@ package be.bendem.itemtochat.command.transaction;
 
 import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.Transaction;
-import be.bendem.itemtochat.command.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +31,7 @@ public class TransactionListCommand extends AbstractTransactionCommand {
             sendLogMessage(sender, "No transactions...");
         }
         for(Transaction transaction : transactions) {
-            if(player != null && !transaction.getSender().equalsIgnoreCase(player.getName())) {
+            if(player != null && !transaction.getSender().equals(player.getUniqueId())) {
                 continue;
             }
             sendLogMessage(sender, "Transaction " + transaction.hashCode() + " : " + transaction.toString(), ChatColor.GRAY);

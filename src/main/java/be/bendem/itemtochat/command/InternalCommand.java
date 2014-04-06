@@ -37,7 +37,7 @@ public class InternalCommand extends AbstractCommand {
             sendLogMessage(sender, "This transaction has expired...");
         }
         if(transaction.getType() == Transaction.Type.Send) {
-            trade(Bukkit.getPlayerExact(transaction.getSender()), (Player) sender, transaction.getItemStack());
+            trade(Bukkit.getPlayer(transaction.getSender()), (Player) sender, transaction.getItemStack());
         } else {
             give((Player) sender, transaction.getItemStack());
         }

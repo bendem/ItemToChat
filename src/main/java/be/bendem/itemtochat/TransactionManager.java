@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author bendem
@@ -111,10 +112,10 @@ public class TransactionManager {
      * @param player Player name
      * @return Count of deleted transactions
      */
-    public synchronized int remove(String player) {
+    public synchronized int remove(UUID player) {
         int count = 0;
         for(Map.Entry<Integer, Transaction> entry : transactions.entrySet()) {
-            if(entry.getValue().getSender().equalsIgnoreCase(player)) {
+            if(entry.getValue().getSender().equals(player)) {
                 remove(entry.getKey());
             }
         }

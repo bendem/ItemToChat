@@ -1,5 +1,6 @@
 package be.bendem.itemtochat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -8,23 +9,24 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author bendem
  */
 public class Transaction {
 
-    private final String    sender;
+    private final UUID      sender;
     private final ItemStack itemStack;
     private final long      timeStamp;
     private final long      lifeTime;
-    private final Type type;
+    private final Type      type;
 
-    public Transaction(String sender, ItemStack itemStack, long timeStamp, long lifeTime) {
+    public Transaction(UUID sender, ItemStack itemStack, long timeStamp, long lifeTime) {
         this(sender, itemStack, timeStamp, lifeTime, Type.Send);
     }
 
-    public Transaction(String sender, ItemStack itemStack, long timeStamp, long lifeTime, Type type) {
+    public Transaction(UUID sender, ItemStack itemStack, long timeStamp, long lifeTime, Type type) {
         this.sender = sender;
         this.itemStack = itemStack;
         this.timeStamp = timeStamp;
@@ -36,8 +38,7 @@ public class Transaction {
         if(!section.contains("sender") || !section.contains("itemstack") || !section.contains("timestamp") || !section.contains("lifetime")) {
             return null;
         }
-
-        String sender = section.getString("sender");
+        UUID sender = UUID.fromString(section.getString("sender"));
         ItemStack itemStack = section.getItemStack("itemstack");
         long timestamp = section.getLong("timestamp");
         long lifetime = section.getLong("lifetime");
@@ -48,7 +49,7 @@ public class Transaction {
     public static MemorySection serialize(Transaction transaction) {
         MemoryConfiguration serialized = new MemoryConfiguration();
 
-        serialized.set("sender", transaction.getSender());
+        serialized.set("sender", transaction.getSender().toString());
         serialized.set("itemstack", transaction.getItemStack());
         serialized.set("timestamp", transaction.getTimeStamp());
         serialized.set("lifetime", transaction.getLifeTime());
@@ -56,8 +57,12 @@ public class Transaction {
         return serialized;
     }
 
-    public String getSender() {
+    public UUID getSender() {
         return sender;
+    }
+
+    public String getSenderName() {
+        return Bukkit.getPlayer(sender).getName();
     }
 
     public ItemStack getItemStack() {
@@ -109,7 +114,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return ChatColor.WHITE + sender + ChatColor.GRAY + " is " + (type == Type.Send ? " sending " : " giving ") +
+        return ChatColor.WHITE + getSenderName() + ChatColor.GRAY + " is " + (type == Type.Send ? " sending " : " giving ") +
             '\n' + ChatColor.WHITE + itemStack + ChatColor.GRAY + " since " + ChatColor.WHITE +
             (new SimpleDateFormat("H:m:s").format(new Date(timeStamp))) + ChatColor.GRAY + " for " +
             ChatColor.WHITE + lifeTime/1000 + 's';
