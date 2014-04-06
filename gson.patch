@@ -1,5 +1,5 @@
 diff --git a/pom.xml b/pom.xml
-index 56da888..da74bef 100644
+index 56da888..ec85936 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,7 +3,7 @@
@@ -11,6 +11,76 @@ index 56da888..da74bef 100644
    <inceptionYear>2008</inceptionYear>
    <name>Gson</name>
    <parent>
+@@ -117,69 +117,6 @@
+         </configuration>
+       </plugin>
+       <plugin>
+-       <!-- TODO(inder): add manifest entry for maven group, artifact, and classifier ids -->
+-         <groupId>org.apache.maven.plugins</groupId>
+-         <artifactId>maven-source-plugin</artifactId>
+-         <version>2.2.1</version>
+-         <executions>
+-           <execution>
+-             <id>attach-sources</id>
+-             <phase>verify</phase>
+-             <goals>
+-               <goal>jar</goal>
+-             </goals>
+-           </execution>
+-         </executions>
+-         <configuration>
+-           <archive>
+-             <manifestEntries>
+-               <Eclipse-SourceBundle>com.google.gson;version="${project.version}"</Eclipse-SourceBundle>
+-               <Bundle-SymbolicName>com.google.gson.source</Bundle-SymbolicName>
+-               <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+-               <Bundle-Version>${project.version}</Bundle-Version>
+-             </manifestEntries>
+-           </archive>
+-         </configuration>
+-       </plugin>
+-       <plugin>
+-         <!-- TODO(inder): add manifest entry for maven group, artifact, and classifier ids -->
+-         <groupId>org.apache.maven.plugins</groupId>
+-         <artifactId>maven-javadoc-plugin</artifactId>
+-         <version>2.9</version>
+-         <executions>
+-           <execution>
+-             <id>attach-javadocs</id>
+-             <goals>
+-               <goal>jar</goal>
+-             </goals>
+-           </execution>
+-         </executions>
+-         <configuration>
+-           <includePackageNames>com.google.gson</includePackageNames>
+-           <excludePackageNames>com.google.gson.internal:com.google.gson.internal.bind</excludePackageNames>
+-            <links>
+-             <link>http://docs.oracle.com/javase/1.5.0/docs/api/</link>
+-           </links>
+-           <version>true</version>
+-           <show>protected</show>
+-         </configuration>
+-       </plugin>
+-       <plugin>
+-         <groupId>org.apache.maven.plugins</groupId>
+-         <artifactId>maven-eclipse-plugin</artifactId>
+-         <version>2.9</version>
+-         <configuration>
+-           <downloadSources>true</downloadSources>
+-           <downloadJavadocs>true</downloadJavadocs>
+-           <workspace>
+-             ../eclipse-ws/
+-           </workspace>
+-           <workspaceCodeStylesURL>
+-             file:///${basedir}/../lib/gson-formatting-styles.xml
+-           </workspaceCodeStylesURL>
+-         </configuration>
+-       </plugin>
+-      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-release-plugin</artifactId>
+         <!-- version>2.4.1</version -->
 diff --git a/src/main/java/com/google/gson/stream/JsonWriter.java b/src/main/java/com/google/gson/stream/JsonWriter.java
 index 6a935dd..e00da06 100644
 --- a/src/main/java/com/google/gson/stream/JsonWriter.java
