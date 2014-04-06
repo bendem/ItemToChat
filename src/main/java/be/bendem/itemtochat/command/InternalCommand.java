@@ -32,7 +32,7 @@ public class InternalCommand extends AbstractCommand {
         plugin.logger.info("TimeStamp : " + transaction.getTimeStamp());
         plugin.logger.info("LifeTime  : " + transaction.getLifeTime());
         plugin.logger.info("remaining : " + (new Date().getTime() - transaction.getTimeStamp() - transaction.getLifeTime()));
-        if(transaction.isValid()) {
+        if(!transaction.isValid()) {
             plugin.getTransactionManager().remove(transaction);
             sendLogMessage(sender, "This transaction has expired...");
         }
