@@ -38,7 +38,7 @@ public class TransactionListCommand extends AbstractTransactionCommand {
         if(transactionNb == 0) {
             sendLogMessage(sender, "No transactions...");
         } else {
-            sendLogMessage(sender, "Total transactions : " + ChatColor.BOLD + transactionNb, ChatColor.GRAY);
+            sendLogMessage(sender, "Total transactions : " + ChatColor.WHITE + transactionNb, ChatColor.GRAY);
         }
     }
 
