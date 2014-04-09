@@ -27,7 +27,7 @@ public class TransactionManager {
         this.plugin = plugin;
         this.transactions = new HashMap<>();
 
-        file = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + FILENAME);
+        file = new File(plugin.getDataFolder(), FILENAME);
         createFile(false);
     }
 
