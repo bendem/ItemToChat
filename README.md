@@ -20,15 +20,15 @@ You can just middle click an item and it will send it to the chat.
 
 ## Permissions
 
-``itemtochat.*``               : Give access to all ItemToChat features
-``itemtochat.commands.*``      : Give access to all ItemToChat commands
-``itemtochat.commands.reload`` : Reload config from file (default is op)
-``itemtochat.commands.show``   : Use /itc show command (default is true)
-``itemtochat.commands.send``   : Use /itc send command (default is true)
-``itemtochat.commands.give``   : Use /itc give command (default is op)
-``itemtochat.chat.*``          : Give access to the chat related features
-``itemtochat.chat.message``    : Show an item into the chat using a placeholder (default is true)
-``itemtochat.chat.click``      : Click to get item on usable messages (default is true)
+- ``itemtochat.*``               : Give access to all ItemToChat features
+- ``itemtochat.commands.*``      : Give access to all ItemToChat commands
+- ``itemtochat.commands.reload`` : Reload config from file (default is op)
+- ``itemtochat.commands.show``   : Use /itc show command (default is true)
+- ``itemtochat.commands.send``   : Use /itc send command (default is true)
+- ``itemtochat.commands.give``   : Use /itc give command (default is op)
+- ``itemtochat.chat.*``          : Give access to the chat related features
+- ``itemtochat.chat.message``    : Show an item into the chat using a placeholder (default is true)
+- ``itemtochat.chat.click``      : Click to get item on usable messages (default is true)
 
 ## Config
 
@@ -36,12 +36,12 @@ You can just middle click an item and it will send it to the chat.
 
 ## Features
 
-- ``[X]`` Display item in the chat by clicking it
-- ``[X]`` Display item in the chat by typing ``[item]`` in the chat
-- ``[ ]`` Display item in the chat with the possibility to click it to get it
-- ``[ ]`` Possibility for admins to clear the transactions
-- ``[ ]`` Handle all item data
-- ``[ ]`` Add more stuff to the config
+- [X] Display item in the chat by clicking it
+- [X] Display item in the chat by typing ``[item]`` in the chat
+- [ ] Display item in the chat with the possibility to click it to get it
+- [ ] Possibility for admins to clear the transactions
+- [ ] Handle all item data
+- [ ] Add more stuff to the config
 
 ## Continous development
 
