@@ -36,8 +36,8 @@ You can just middle click an item and it will send it to the chat.
 
 ## Features
 
-- [X] Display item in the chat by clicking it
-- [X] Display item in the chat by typing ``[item]`` in the chat
+- [x] Display item in the chat by clicking it
+- [x] Display item in the chat by typing ``[item]`` in the chat
 - [ ] Display item in the chat with the possibility to click it to get it
 - [ ] Possibility for admins to clear the transactions
 - [ ] Handle all item data
