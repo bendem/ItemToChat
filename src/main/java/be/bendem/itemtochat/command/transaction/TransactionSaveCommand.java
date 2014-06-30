@@ -12,7 +12,7 @@ import java.util.List;
 public class TransactionSaveCommand extends AbstractTransactionCommand {
 
     public TransactionSaveCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.transaction.save");
     }
 
     @Override

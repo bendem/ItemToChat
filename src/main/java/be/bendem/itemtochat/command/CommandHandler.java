@@ -2,52 +2,54 @@ package be.bendem.itemtochat.command;
 
 import be.bendem.itemtochat.ItemToChat;
 import be.bendem.itemtochat.command.transaction.TransactionCommand;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author bendem
  */
 public class CommandHandler implements CommandExecutor {
 
-    private final ItemToChat                       plugin;
-    private final HashMap<String, AbstractCommand> commandRegistry;
-    private final HashMap<String, String>          aliases;
+    private final ItemToChat                   plugin;
+    private final Map<String, AbstractCommand> commandsRegistry;
+    private final Map<String, String>          aliasesRegistry;
 
     public CommandHandler(ItemToChat plugin) {
         this.plugin = plugin;
 
-        aliases = new HashMap<>();
-        aliases.put("sh", "show");
-        aliases.put("s", "send");
-        aliases.put("g", "give");
-        aliases.put("t", "transaction");
+        aliasesRegistry = new HashMap<>();
+        aliasesRegistry.put("sh", "show");
+        aliasesRegistry.put("s", "send");
+        aliasesRegistry.put("g", "give");
+        aliasesRegistry.put("t", "transaction");
 
-        commandRegistry = new HashMap<>();
-        commandRegistry.put("show", new ShowCommand(plugin));
-        commandRegistry.put("send", new SendCommand(plugin));
-        commandRegistry.put("give", new GiveCommand(plugin));
-        commandRegistry.put("help", new HelpCommand(plugin));
-        commandRegistry.put("reload", new ReloadCommand(plugin));
-        commandRegistry.put("transaction", new TransactionCommand(plugin));
-        commandRegistry.put("internal", new InternalCommand(plugin));
+        commandsRegistry = new HashMap<>();
+        commandsRegistry.put("show", new ShowCommand(plugin));
+        commandsRegistry.put("send", new SendCommand(plugin));
+        commandsRegistry.put("give", new GiveCommand(plugin));
+        commandsRegistry.put("help", new HelpCommand(plugin));
+        commandsRegistry.put("reload", new ReloadCommand(plugin));
+        commandsRegistry.put("transaction", new TransactionCommand(plugin));
+        commandsRegistry.put("internal", new InternalCommand(plugin));
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length == 0 || !command.getName().equalsIgnoreCase("itc")) {
             return false;
         }
         String commandName = args[0].toLowerCase();
-        if(aliases.containsKey(commandName)) {
-            commandName = aliases.get(commandName);
+        if(aliasesRegistry.containsKey(commandName)) {
+            commandName = aliasesRegistry.get(commandName);
         }
-        if(commandRegistry.containsKey(commandName)) {
-            final AbstractCommand c = commandRegistry.get(commandName);
+        if(commandsRegistry.containsKey(commandName)) {
+            final AbstractCommand c = commandsRegistry.get(commandName);
 
             if(!c.hasPermission(sender)) {
                 c.sendLogMessage(sender, "You don't have the permission to use that command.");

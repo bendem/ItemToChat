@@ -16,12 +16,12 @@ commands:
         permission: itemtochat.commands
 
 permissions:
-    itemtochat.*:
+    itemtochat:
         description: Give access to all ItemToChat features
         children:
             itemtochat.commands: true
             itemtochat.chat: true
-    itemtochat.commands.*:
+    itemtochat.commands:
         description: Give access to all ItemToChat commands
         children:
             itemtochat.commands.reload: true
@@ -45,8 +45,12 @@ permissions:
     itemtochat.commands.transaction:
         description: Use /itc transaction command
         default: op
+        children:
+            itemtochat.commands.transaction.list: true
+            itemtochat.commands.transaction.save: true
+            itemtochat.commands.transaction.clear: true
 
-    itemtochat.chat.*:
+    itemtochat.chat:
         description: Give access to the chat related features
         children:
             itemtochat.chat.message: true

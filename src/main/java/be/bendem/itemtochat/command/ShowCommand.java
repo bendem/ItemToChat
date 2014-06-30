@@ -11,21 +11,11 @@ import java.util.List;
 public class ShowCommand extends AbstractCommand {
 
     public ShowCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.show", false);
     }
 
     @Override
     public void exec(CommandSender sender, List<String> args) {
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return false;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("itemtochat.commands.show");
     }
 
 }

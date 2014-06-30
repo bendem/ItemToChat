@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * @author bendem
  */
-public class TransactionCommand extends AbstractTransactionCommand {
+public class TransactionCommand extends AbstractCommand {
 
     private final HashMap<String, AbstractCommand> commandRegistry = new HashMap<>();
 
     public TransactionCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.transaction");
 
         commandRegistry.put("list", new TransactionListCommand(plugin));
         commandRegistry.put("save", new TransactionSaveCommand(plugin));

@@ -16,7 +16,7 @@ import java.util.List;
 public class SendCommand extends AbstractCommand {
 
     public SendCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.send", false);
     }
 
     @Override
@@ -44,16 +44,6 @@ public class SendCommand extends AbstractCommand {
         int transacNumber = plugin.getTransactionManager().add(new Transaction(player.getUniqueId(), player.getItemInHand(), new Date().getTime(), 60_000)); // TODO Lifetime from config!
         plugin.logger.info("Transaction created : " + transacNumber);
         ItemToChat.dispatchCommand(sendTo, converter);
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return false;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("itemtochat.commands.send");
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class TransactionListCommand extends AbstractTransactionCommand {
 
     public TransactionListCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.transaction.list");
     }
 
     @Override
@@ -40,16 +40,6 @@ public class TransactionListCommand extends AbstractTransactionCommand {
         } else {
             sendLogMessage(sender, "Total transactions : " + ChatColor.WHITE + transactionNb, ChatColor.GRAY);
         }
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return true;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("itemtochat.commands.transaction");
     }
 
 }

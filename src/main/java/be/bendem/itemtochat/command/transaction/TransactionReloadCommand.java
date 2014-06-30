@@ -12,7 +12,7 @@ import java.util.List;
 public class TransactionReloadCommand extends AbstractTransactionCommand {
 
     public TransactionReloadCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.transaction.reload");
     }
 
     @Override

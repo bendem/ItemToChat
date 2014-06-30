@@ -11,7 +11,7 @@ import java.util.List;
 public class HelpCommand extends AbstractCommand {
 
     public HelpCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, null);
     }
 
     @Override
@@ -19,16 +19,6 @@ public class HelpCommand extends AbstractCommand {
         if(args.size() == 0) {
             sender.sendMessage(plugin.getCommand("itc").getUsage());
         }
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return true;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return true;
     }
 
 }

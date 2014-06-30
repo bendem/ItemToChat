@@ -12,23 +12,13 @@ import java.util.List;
 public class ReloadCommand extends AbstractCommand {
 
     public ReloadCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.commands.reload");
     }
 
     @Override
     public void exec(CommandSender sender, List<String> args) {
         plugin.reloadConfig();
         sendLogMessage(sender, "Config reloaded.", ChatColor.GREEN);
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return true;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("itemtochat.commands.reload");
     }
 
 }

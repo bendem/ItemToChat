@@ -17,7 +17,7 @@ import java.util.List;
 public class InternalCommand extends AbstractCommand {
 
     public InternalCommand(ItemToChat plugin) {
-        super(plugin);
+        super(plugin, "itemtochat.chat.click", false);
     }
 
     @Override
@@ -68,16 +68,6 @@ public class InternalCommand extends AbstractCommand {
             return 0;
         }
         return identifier;
-    }
-
-    @Override
-    public boolean canBeUsedFromConsole() {
-        return false;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("itemtochat.chat.click");
     }
 
 }
