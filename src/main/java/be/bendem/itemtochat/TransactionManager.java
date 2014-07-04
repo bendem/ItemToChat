@@ -22,6 +22,7 @@ public class TransactionManager {
     private final ItemToChat                    plugin;
     private final HashMap<Integer, Transaction> transactions;
     private final File                          file;
+    private volatile boolean dirty = false;
 
     public TransactionManager(ItemToChat plugin) {
         this.plugin = plugin;
@@ -55,6 +56,10 @@ public class TransactionManager {
      * Save all the transactions to the file (the transactions in the file are lost)
      */
     public synchronized void saveTransactions() {
+        if(!dirty) {
+            return;
+        }
+        plugin.logger.info("Saving transactions...");
         YamlConfiguration config = new YamlConfiguration();
         config.options().header("Do not modify this file unless you want your house to be destroyed by angry galactic camels!").copyHeader(true);
 
@@ -67,6 +72,7 @@ public class TransactionManager {
 
         try {
             config.save(file);
+            dirty = false;
         } catch(IOException e) {
             plugin.logger.warning("Could not save transactions!");
         }
@@ -80,6 +86,7 @@ public class TransactionManager {
         while(it.hasNext()) {
             if(!it.next().getValue().isValid()) {
                 it.remove();
+                dirty = true;
             }
         }
     }
@@ -92,6 +99,7 @@ public class TransactionManager {
     public synchronized int add(Transaction transaction) {
         if(transaction.isValid() && !contains(transaction)) {
             transactions.put(transaction.hashCode(), transaction);
+            dirty = true;
             return transaction.hashCode();
         }
         return 0;
@@ -104,6 +112,7 @@ public class TransactionManager {
      */
     public synchronized void remove(Transaction transaction) {
         remove(transaction.hashCode());
+        dirty = true;
     }
 
     /**
@@ -114,6 +123,7 @@ public class TransactionManager {
     public synchronized void remove(int transactionHash) {
         if(contains(transactionHash)) {
             transactions.remove(transactionHash);
+            dirty = true;
         }
     }
 
@@ -132,6 +142,9 @@ public class TransactionManager {
                 it.remove();
                 ++count;
             }
+        }
+        if(count > 0) {
+            dirty = true;
         }
         return count;
     }

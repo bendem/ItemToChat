@@ -5,6 +5,8 @@ import be.bendem.itemtochat.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,6 +17,7 @@ public class ItemStackConverter extends AbstractJsonConverter {
 
     private final String textBefore;
     private final String textAfter;
+    private String name = null;
 
     public ItemStackConverter(final ItemToChat plugin, final ItemStack itemStack) {
         this(plugin, itemStack, null, null);
@@ -53,12 +56,6 @@ public class ItemStackConverter extends AbstractJsonConverter {
         JsonArray jsExtra = new JsonArray();
         JsonObject jsExtraSection = new JsonObject();
 
-        // TODO Make text being client translated
-        String itemText = Utils.capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
-        if(itemStack.getAmount() > 1) {
-            itemText += " x " + itemStack.getAmount();
-        }
-        jsExtraSection.addProperty("text", itemText);
         jsExtraSection.addProperty("color", getItemColor());
         jsExtraSection.add("hoverEvent", createHoverEventSection());
 
@@ -71,6 +68,17 @@ public class ItemStackConverter extends AbstractJsonConverter {
         jsExtra.add(before);
         jsExtra.add(jsExtraSection);
         jsExtra.add(after);
+
+        // TODO Make text being client translated
+        // Add text last so we can get it's name
+        String itemText = Utils.capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
+        //if(name != null) {
+        //    itemText += '(' + name + ChatColor.RESET + ')';
+        //}
+        if(itemStack.getAmount() > 1) {
+            itemText += " x " + itemStack.getAmount();
+        }
+        jsExtraSection.addProperty("text", itemText);
 
         return jsExtra;
     }
@@ -97,10 +105,12 @@ public class ItemStackConverter extends AbstractJsonConverter {
 
     private JsonObject createTagSection() {
         JsonObject jsTag = new JsonObject();
+        boolean added = false;
         // Add Enchants info
         JsonElement jsEnchants = new EnchantmentsConverter(plugin, itemStack).toJson();
         if(jsEnchants != null) {
             jsTag.add("ench", jsEnchants);
+            added = true;
         }
         // Add Book info
         BookConverter bookConverter = new BookConverter(plugin, itemStack);
@@ -113,39 +123,47 @@ public class ItemStackConverter extends AbstractJsonConverter {
                 jsTag.add("title", bookConverter.getTitle());
             }
             jsTag.add("pages", jsPages);
+            added = true;
         }
         // Add Fireworks info
         JsonElement jsFireworks = new FireworksConverter(plugin, itemStack).toJson();
         if(jsFireworks != null) {
             jsTag.add("Fireworks", jsFireworks);
+            added = true;
         }
         // Add Firework Star info
         JsonElement jsFireworkStar = new FireworkStarConverter(plugin, itemStack).toJson();
         if(jsFireworkStar != null) {
             jsTag.add("Explosion", jsFireworkStar);
+            added = true;
         }
         // Add Display info
         JsonObject jsDisplay = createDisplaySection();
         if(jsDisplay != null) {
             jsTag.add("display", jsDisplay);
+            added = true;
         }
 
-        return jsTag;
+        return added ? jsTag : null;
     }
 
     private JsonObject createDisplaySection() {
         if(!itemStack.hasItemMeta()) {
             return null;
         }
+        boolean added = false;
         ItemMeta meta = itemStack.getItemMeta();
         JsonObject jsDisplay = new JsonObject();
         if(meta.hasDisplayName()) {
             jsDisplay.addProperty("Name", meta.getDisplayName());
+            name = meta.getDisplayName();
+            added = true;
         }
         if(meta.hasLore()) {
             jsDisplay.add("Lore", listToJsonArray(meta.getLore()));
+            added = true;
         }
-        return jsDisplay;
+        return added ? jsDisplay : null;
     }
 
     private String getItemColor() {
