@@ -1,10 +1,10 @@
 package be.bendem.bukkit.itemtochat.jsonconverters;
 
 import be.bendem.bukkit.itemtochat.ItemToChat;
-import be.bendem.bukkit.itemtochat.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -69,7 +69,7 @@ public class ItemStackConverter extends AbstractJsonConverter {
 
         // TODO Make text being client translated
         // Add text last so we can get it's name
-        String itemText = Utils.capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
+        String itemText = StringUtils.capitalize(itemStack.getType().name().toLowerCase().replace("_", " "));
         //if(name != null) {
         //    itemText += '(' + name + ChatColor.RESET + ')';
         //}
