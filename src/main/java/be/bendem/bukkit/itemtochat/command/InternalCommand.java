@@ -1,7 +1,7 @@
-package be.bendem.itemtochat.command;
+package be.bendem.bukkit.itemtochat.command;
 
-import be.bendem.itemtochat.ItemToChat;
-import be.bendem.itemtochat.Transaction;
+import be.bendem.bukkit.itemtochat.ItemToChat;
+import be.bendem.bukkit.itemtochat.Transaction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

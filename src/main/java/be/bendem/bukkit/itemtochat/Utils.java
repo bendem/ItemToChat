@@ -1,4 +1,4 @@
-package be.bendem.itemtochat;
+package be.bendem.bukkit.itemtochat;
 
 /**
  * @author bendem

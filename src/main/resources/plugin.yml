@@ -1,5 +1,5 @@
 name: ${pom.name}
-main: ${pom.groupId}.${pom.name}
+main: be.bendem.bukkit.itemtochat.ItemToChat
 version: ${pom.version}
 author: bendem
 description: Send items to chat so others know what you speak about.

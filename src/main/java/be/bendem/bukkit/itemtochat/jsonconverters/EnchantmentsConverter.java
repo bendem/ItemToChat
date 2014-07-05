@@ -1,6 +1,6 @@
-package be.bendem.itemtochat.jsonconverters;
+package be.bendem.bukkit.itemtochat.jsonconverters;
 
-import be.bendem.itemtochat.ItemToChat;
+import be.bendem.bukkit.itemtochat.ItemToChat;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

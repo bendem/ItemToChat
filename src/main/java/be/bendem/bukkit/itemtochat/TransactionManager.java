@@ -1,4 +1,4 @@
-package be.bendem.itemtochat;
+package be.bendem.bukkit.itemtochat;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;

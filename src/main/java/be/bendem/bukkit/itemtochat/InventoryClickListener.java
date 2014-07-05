@@ -1,6 +1,6 @@
-package be.bendem.itemtochat;
+package be.bendem.bukkit.itemtochat;
 
-import be.bendem.itemtochat.jsonconverters.ItemStackConverter;
+import be.bendem.bukkit.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

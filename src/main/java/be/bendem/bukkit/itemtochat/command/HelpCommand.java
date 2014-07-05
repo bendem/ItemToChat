@@ -1,6 +1,6 @@
-package be.bendem.itemtochat.command;
+package be.bendem.bukkit.itemtochat.command;
 
-import be.bendem.itemtochat.ItemToChat;
+import be.bendem.bukkit.itemtochat.ItemToChat;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
