@@ -2,6 +2,7 @@ package be.bendem.bukkit.itemtochat.command;
 
 import be.bendem.bukkit.itemtochat.ItemToChat;
 import be.bendem.bukkit.itemtochat.Transaction;
+import be.bendem.bukkit.itemtochat.core.commands.AbstractCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

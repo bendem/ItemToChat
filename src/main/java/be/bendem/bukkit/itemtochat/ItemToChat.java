@@ -1,6 +1,8 @@
 package be.bendem.bukkit.itemtochat;
 
-import be.bendem.bukkit.itemtochat.command.CommandHandler;
+import be.bendem.bukkit.itemtochat.core.commands.CommandHandler;
+import be.bendem.bukkit.itemtochat.events.ChatListener;
+import be.bendem.bukkit.itemtochat.events.InventoryClickListener;
 import mkremins.fanciful.FancyMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -24,7 +26,7 @@ public class ItemToChat extends JavaPlugin {
     public  Logger             logger;
     private TransactionManager transactionManager;
     private BukkitTask         autosaveTask;
-    private String chatStringToReplace;
+    private String             chatStringToReplace;
 
     @Override
     public void onEnable() {
@@ -47,10 +49,9 @@ public class ItemToChat extends JavaPlugin {
             throw new RuntimeException("Could not start autosave task!");
         }
 
-        getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
-
-        getCommand("itc").setExecutor(new CommandHandler(this));
+        new InventoryClickListener(this);
+        new ChatListener(this);
+        new CommandHandler(this);
 
         chatStringToReplace = getConfig().getString("chat-string-to-replace", "[item]");
     }

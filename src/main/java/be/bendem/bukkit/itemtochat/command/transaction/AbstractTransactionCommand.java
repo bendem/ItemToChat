@@ -1,7 +1,7 @@
 package be.bendem.bukkit.itemtochat.command.transaction;
 
 import be.bendem.bukkit.itemtochat.ItemToChat;
-import be.bendem.bukkit.itemtochat.command.AbstractCommand;
+import be.bendem.bukkit.itemtochat.core.commands.AbstractCommand;
 
 /**
  * @author bendem

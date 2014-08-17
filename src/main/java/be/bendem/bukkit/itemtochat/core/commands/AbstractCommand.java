@@ -1,4 +1,4 @@
-package be.bendem.bukkit.itemtochat.command;
+package be.bendem.bukkit.itemtochat.core.commands;
 
 import be.bendem.bukkit.itemtochat.ItemToChat;
 import org.bukkit.ChatColor;
