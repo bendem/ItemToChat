@@ -1,8 +1,5 @@
 package be.bendem.bukkit.itemtochat;
 
-import be.bendem.bukkit.itemtochat.jsonconverters.ItemStackConverter;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -13,33 +10,15 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class ChatListener implements Listener {
 
     private final ItemToChat plugin;
-    private       String     chatStringToReplace;
 
     public ChatListener(ItemToChat plugin) {
         this.plugin = plugin;
-        chatStringToReplace = plugin.getConfig().getString("chat-string-to-replace", "[item]");
     }
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
-        String message = e.getMessage();
-
-        if(!message.contains(chatStringToReplace)
-                || !e.getPlayer().hasPermission("itemtochat.chat.message")
-                || e.getPlayer().getItemInHand() == null
-                || e.getPlayer().getItemInHand().getType() == Material.AIR) {
-            return;
-        }
-
-        String before = "<" + e.getPlayer().getDisplayName() + "> " + message.substring(0, message.indexOf(chatStringToReplace));
-        String after = message.substring(message.indexOf(chatStringToReplace) + chatStringToReplace.length());
-        ItemStackConverter itemStackConverter = new ItemStackConverter(plugin, e.getPlayer().getItemInHand(), before, after);
-        for(Player p : e.getRecipients()) {
-            plugin.logger.info("json : " + itemStackConverter.toString());
-            ItemToChat.dispatchCommand(p.getName(), itemStackConverter);
-        }
-
-        e.setCancelled(true);
+        // Permission?
+        e.setCancelled(plugin.sendItem(e.getPlayer(), e.getRecipients(), e.getPlayer().getItemInHand(), e.getMessage()));
     }
 
 }

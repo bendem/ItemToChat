@@ -2,7 +2,6 @@ package be.bendem.bukkit.itemtochat.command;
 
 import be.bendem.bukkit.itemtochat.ItemToChat;
 import be.bendem.bukkit.itemtochat.Transaction;
-import be.bendem.bukkit.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,23 +26,27 @@ public class SendCommand extends AbstractCommand {
         if(args.size() > 1) {
             sendLogMessage(sender, "Too much arguments...");
         }
-        String sendTo = null;
+        Player sendTo = null;
         if(args.size() == 1) {
-            Player p = Bukkit.getPlayerExact(args.get(0));
-            if(p == null) {
+            sendTo = Bukkit.getPlayerExact(args.get(0));
+            if(sendTo == null) {
                 sendLogMessage(sender, args.get(0) + " is not connected...");
                 return;
             }
-            sendTo = p.getName();
         }
 
         Player player = (Player) sender;
 
         // TODO Message from config
-        ItemStackConverter converter = new ItemStackConverter(plugin, player.getItemInHand(), player.getName() + " is sending ");
-        int transacNumber = plugin.getTransactionManager().add(new Transaction(player.getUniqueId(), player.getItemInHand(), new Date().getTime(), 60_000)); // TODO Lifetime from config!
+        // TODO Lifetime from config!
+        int transacNumber = plugin.getTransactionManager().add(new Transaction(player.getUniqueId(), player.getItemInHand(), new Date().getTime(), 60_000));
         plugin.logger.info("Transaction created : " + transacNumber);
-        ItemToChat.dispatchCommand(sendTo, converter);
+        // TODO Fix that message to be a /me
+        if(sendTo == null) {
+            plugin.sendItem(player, player.getItemInHand(), " is sending [item].");
+        } else {
+            plugin.sendItem(player, sendTo, player.getItemInHand(), " is sending [item].");
+        }
     }
 
 }

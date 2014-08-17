@@ -1,12 +1,17 @@
 package be.bendem.bukkit.itemtochat;
 
 import be.bendem.bukkit.itemtochat.command.CommandHandler;
-import be.bendem.bukkit.itemtochat.jsonconverters.ItemStackConverter;
+import mkremins.fanciful.FancyMessage;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +24,7 @@ public class ItemToChat extends JavaPlugin {
     public  Logger             logger;
     private TransactionManager transactionManager;
     private BukkitTask         autosaveTask;
+    private String chatStringToReplace;
 
     @Override
     public void onEnable() {
@@ -45,6 +51,8 @@ public class ItemToChat extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
         getCommand("itc").setExecutor(new CommandHandler(this));
+
+        chatStringToReplace = getConfig().getString("chat-string-to-replace", "[item]");
     }
 
     @Override
@@ -57,14 +65,57 @@ public class ItemToChat extends JavaPlugin {
         return transactionManager;
     }
 
-    public static void dispatchCommand(String to, ItemStackConverter converter) {
-        if(to == null) {
-            for(Player p : Bukkit.getOnlinePlayers()) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), converter.toTellRawCommand(p.getName()));
-            }
-        } else {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), converter.toTellRawCommand(to));
+    public boolean sendItem(Player from, Player to, ItemStack item, String message) {
+        FancyMessage fancyMessage = getMessage(from, item, message);
+        if(fancyMessage != null) {
+            fancyMessage.send(to);
         }
+        return fancyMessage != null;
+    }
+
+    public boolean sendItem(Player from, Collection<Player> to, ItemStack item, String message) {
+        FancyMessage fancyMessage = getMessage(from, item, message);
+        if(fancyMessage != null) {
+            fancyMessage.send(to);
+        }
+        return fancyMessage != null;
+    }
+
+    public boolean sendItem(Player from, ItemStack item, String message) {
+        FancyMessage fancyMessage = getMessage(from, item, message);
+        if(fancyMessage != null) {
+            fancyMessage.send(Bukkit.getOnlinePlayers());
+        }
+        return fancyMessage != null;
+    }
+
+    private FancyMessage getMessage(Player from, ItemStack item, String message) {
+        if(!message.contains(chatStringToReplace)
+                || !from.hasPermission("itemtochat.chat.message")
+                || item == null
+                || item.getType() == Material.AIR) {
+            return null;
+        }
+
+        return new FancyMessage("<")
+                .then(from.getDisplayName())
+                .then("> ")
+                .then(message.substring(0, message.indexOf(chatStringToReplace)))
+                .then("[")
+                .then()
+                    .color(getItemColor(item))
+                    .text(StringUtils.capitalize(item.getType().name().toLowerCase().replace("_", " ")))
+                    .itemTooltip(item)
+                .then()
+                    .text(" x " + item.getAmount())
+                    .itemTooltip(item)
+                .then("]")
+                .then(message.substring(message.indexOf(chatStringToReplace) + chatStringToReplace.length()));
+    }
+
+    private ChatColor getItemColor(ItemStack item) {
+        // TODO handle wool / stained glass / leather armor (using autodetect-colors)
+        return ChatColor.valueOf(getConfig().getString("item-colors." + item.getType().name().toLowerCase(), "white").toUpperCase());
     }
 
 }

@@ -1,6 +1,5 @@
 package be.bendem.bukkit.itemtochat;
 
-import be.bendem.bukkit.itemtochat.jsonconverters.ItemStackConverter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,13 +23,8 @@ public class InventoryClickListener implements Listener {
         if(e.getClick() != ClickType.MIDDLE || e.getCurrentItem().getType() == Material.AIR) {
             return;
         }
-
-        ItemStackConverter itemStackConverter = new ItemStackConverter(plugin, e.getCurrentItem(), "<" + ((Player) e.getWhoClicked()).getDisplayName() + "> ");
-
-        plugin.logger.info("json: " + itemStackConverter.toString());
-
-        // TODO Permission check for sender and receivers
-        ItemToChat.dispatchCommand(null, itemStackConverter);
+        // TODO Permissions
+        plugin.sendItem((Player) e.getWhoClicked(), e.getCurrentItem(), "[item]");
     }
 
 }
